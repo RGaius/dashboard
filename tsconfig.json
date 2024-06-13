@@ -2,11 +2,12 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@vben/ts-config/vue-app.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     "baseUrl": ".",
     "declaration": false,
     "types": ["vite/client"],
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*","node_modules/*"],
       "#/*": ["types/*"]
     }
   },
