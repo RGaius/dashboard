@@ -1,5 +1,5 @@
 
-> @vben/vite-config@1.0.0 stub /Users/zhaobo/Workspace/gaius/octopus/dashboard/internal/vite-config
+> @vben/vite-config@1.0.0 stub /Users/zhaobo/dashboard/internal/vite-config
 > pnpm unbuild --stub
 
 ℹ Stubbing vite-config

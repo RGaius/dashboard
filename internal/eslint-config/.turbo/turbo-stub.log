@@ -1,5 +1,5 @@
 
-> @vben/eslint-config@1.0.0 stub /Users/zhaobo/Workspace/gaius/octopus/dashboard/internal/eslint-config
+> @vben/eslint-config@1.0.0 stub /Users/zhaobo/dashboard/internal/eslint-config
 > pnpm unbuild --stub
 
 ℹ Stubbing eslint-config

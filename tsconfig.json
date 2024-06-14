@@ -5,10 +5,18 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "declaration": false,
-    "types": ["vite/client"],
+    "types": [
+      "vite/client"
+    ],
     "paths": {
-      "@/*": ["src/*","node_modules/*"],
-      "#/*": ["types/*"]
+      "@/*": [
+        "src/*",
+        "node_modules/*",
+        "views/*"
+      ],
+      "#/*": [
+        "types/*"
+      ]
     }
   },
   "include": [
@@ -24,5 +32,10 @@
     "mock/**/*.ts",
     "vite.config.ts"
   ],
-  "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
+  "exclude": [
+    "node_modules",
+    "tests/server/**/*.ts",
+    "dist",
+    "**/*.js"
+  ]
 }
