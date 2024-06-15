@@ -1,2 +1,2 @@
-export * from "/Users/zhaobo/Workspace/gaius/octopus/dashboard/internal/eslint-config/src/index";
-export { default } from "/Users/zhaobo/Workspace/gaius/octopus/dashboard/internal/eslint-config/src/index";
+export * from "/Users/zhaobo/dashboard/internal/eslint-config/src/index";
+export { default } from "/Users/zhaobo/dashboard/internal/eslint-config/src/index";

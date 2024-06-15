@@ -1,5 +1,5 @@
 
-> @vben/stylelint-config@1.0.0 stub /Users/zhaobo/Workspace/gaius/octopus/dashboard/internal/stylelint-config
+> @vben/stylelint-config@1.0.0 stub /Users/zhaobo/dashboard/internal/stylelint-config
 > pnpm unbuild --stub
 
 ℹ Stubbing stylelint-config

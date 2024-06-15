@@ -1,1 +1,1 @@
-export * from "/Users/zhaobo/Workspace/gaius/octopus/dashboard/internal/vite-config/src/index";
+export * from "/Users/zhaobo/dashboard/internal/vite-config/src/index";
