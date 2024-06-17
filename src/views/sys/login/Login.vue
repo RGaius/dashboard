@@ -53,7 +53,6 @@
   import { computed } from 'vue';
   import ForgetPasswordForm from './ForgetPasswordForm.vue';
   import LoginForm from './LoginForm.vue';
-  import RegisterForm from './RegisterForm.vue';
 
   defineProps({
     sessionTimeout: {

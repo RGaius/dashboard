@@ -3,25 +3,25 @@ import { LAYOUT } from '@/router/constant';
 import { t } from '@/hooks/web/useI18n';
 
 const dashboard: AppRouteModule = {
-  path: '/datasource',
-  name: 'Datasource',
+  path: '/interface',
+  name: 'Interface',
   component: LAYOUT,
-  redirect: '/datasource/index',
+  redirect: '/interface/index',
   meta: {
     orderNo: 11,
-    icon: 'mdi:database',
+    icon: 'carbon:interface-usage',
     hideChildrenInMenu: true,
-    title: t('routes.datasource.datasource'),
+    title: t('routes.interface.interface'),
   },
   children: [
     {
       path: 'index',
-      name: 'Datasource',
-      component: () => import('@/views/datasource/index.vue'),
+      name: 'Interface',
+      component: () => import('@/views/interface/index.vue'),
       meta: {
         // affix: true,
         hideMenu: true,
-        title: t('routes.datasource.datasource'),
+        title: t('routes.interface.interface'),
       },
     },
   ],

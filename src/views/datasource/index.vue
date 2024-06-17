@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper title="卡片列表示例" content="基础封装">
+  <PageWrapper>
     <CardList :params="params" :api="demoListApi" @get-method="getMethod" @delete="handleDel">
       <template #header>
         <a-button type="primary" color="error"> 按钮1 </a-button>

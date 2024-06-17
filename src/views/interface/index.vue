@@ -1,32 +1,103 @@
 <template>
-  <PageWrapper title="卡片列表示例" content="基础封装">
-    <CardList :params="params" :api="demoListApi" @get-method="getMethod" @delete="handleDel">
-      <template #header>
-        <a-button type="primary" color="error"> 按钮1 </a-button>
-        <a-button type="primary" color="success"> 按钮2 </a-button>
+  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+    <BasicTable @register="registerTable" :searchInfo="searchInfo">
+      <template #toolbar>
+        <a-button type="primary" @click="handleCreate">新增接口</a-button>
       </template>
-    </CardList>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'clarity:note-edit-line',
+                tooltip: '编辑接口信息',
+                onClick: handleEdit.bind(null, record),
+              },
+              {
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                tooltip: '删除此接口',
+                popConfirm: {
+                  title: '是否确认接口',
+                  placement: 'left',
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
+      </template>
+    </BasicTable>
+    <InterfaceModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { CardList } from '@/components/CardList';
+  import { reactive } from 'vue';
+
+  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { getAccountList } from '@/api/demo/system';
   import { PageWrapper } from '@/components/Page';
-  import { demoListApi } from '@/api/demo/table';
-  import { useMessage } from '@/hooks/web/useMessage';
 
-  const { notification } = useMessage();
-  // 请求api时附带参数
-  const params = {};
+  import { useModal } from '@/components/Modal';
+  import InterfaceModal from './InterfaceModal.vue';
 
-  let reload = () => {};
-  // 获取内部fetch方法;
-  function getMethod(m: any) {
-    reload = m;
+  import { columns, searchFormSchema } from './interface.data';
+
+  defineOptions({ name: 'AccountManagement' });
+
+  const [registerModal, { openModal }] = useModal();
+  const searchInfo = reactive<Recordable>({});
+  const [registerTable, { reload, updateTableDataRecord }] = useTable({
+    title: '接口列表',
+    api: getAccountList,
+    rowKey: 'id',
+    columns,
+    formConfig: {
+      labelWidth: 120,
+      schemas: searchFormSchema,
+      autoSubmitOnEnter: true,
+    },
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    handleSearchInfoFn(info) {
+      console.log('handleSearchInfoFn', info);
+      return info;
+    },
+    actionColumn: {
+      width: 120,
+      title: '操作',
+      dataIndex: 'action',
+      // slots: { customRender: 'action' },
+    },
+  });
+
+  function handleCreate() {
+    openModal(true, {
+      isUpdate: false,
+    });
   }
-  //删除按钮事件
-  function handleDel(id) {
-    console.log(id);
-    notification.success({ message: `成功删除${id}` });
-    reload();
+
+  function handleEdit(record: Recordable) {
+    console.log(record);
+    openModal(true, {
+      record,
+      isUpdate: true,
+    });
+  }
+
+  function handleDelete(record: Recordable) {
+    console.log(record);
+  }
+
+  function handleSuccess({ isUpdate, values }) {
+    if (isUpdate) {
+      // 演示不刷新表格直接更新内部数据。
+      // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
+      const result = updateTableDataRecord(values.id, values);
+      console.log(result);
+    } else {
+      reload();
+    }
   }
 </script>

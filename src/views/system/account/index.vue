@@ -43,11 +43,9 @@
   import AccountModal from './AccountModal.vue';
 
   import { columns, searchFormSchema } from './account.data';
-  import { useGo } from '@/hooks/web/usePage';
 
   defineOptions({ name: 'AccountManagement' });
 
-  const go = useGo();
   const [registerModal, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, updateTableDataRecord, getSearchInfo }] = useTable({
@@ -106,10 +104,5 @@
     } else {
       reload();
     }
-  }
-
-  function handleSelect(deptId = '') {
-    searchInfo.deptId = deptId;
-    reload();
   }
 </script>

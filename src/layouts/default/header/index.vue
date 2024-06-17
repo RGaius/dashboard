@@ -50,7 +50,7 @@
 
       <UserDropDown :theme="getHeaderTheme" />
 
-      <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
+      <!-- <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" /> -->
     </div>
   </Layout.Header>
 </template>
@@ -59,7 +59,6 @@
   import { computed, unref } from 'vue';
 
   import { AppLocalePicker, AppLogo, AppSearch } from '@/components/Application';
-  import { SettingButtonPositionEnum } from '@/enums/appEnum';
   import { MenuModeEnum, MenuSplitTyeEnum } from '@/enums/menuEnum';
   import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting';
   import { useMenuSetting } from '@/hooks/setting/useMenuSetting';
@@ -67,16 +66,12 @@
   import { useAppInject } from '@/hooks/web/useAppInject';
   import { useDesign } from '@/hooks/web/useDesign';
   import { useLocale } from '@/locales/useLocale';
-  import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
   import { propTypes } from '@/utils/propTypes';
 
   import LayoutMenu from '../menu/index.vue';
   import LayoutTrigger from '../trigger/index.vue';
   import { ErrorAction, FullScreen, LayoutBreadcrumb, Notify, UserDropDown } from './components';
 
-  const SettingDrawer = createAsyncComponent(() => import('@/layouts/default/setting/index.vue'), {
-    loading: true,
-  });
   defineOptions({ name: 'LayoutHeader' });
 
   const props = defineProps({
@@ -91,7 +86,7 @@
     getMenuWidth,
     getIsMixSidebar,
   } = useMenuSetting();
-  const { getUseErrorHandle, getShowSettingButton, getSettingButtonPosition } = useRootSetting();
+  const { getUseErrorHandle } = useRootSetting();
 
   const {
     getHeaderTheme,
@@ -100,7 +95,6 @@
     getShowContent,
     getShowBread,
     getShowHeaderLogo,
-    getShowHeader,
     getShowSearch,
   } = useHeaderSetting();
 
@@ -118,18 +112,6 @@
         [`${prefixCls}--${theme}`]: theme,
       },
     ];
-  });
-
-  const getShowSetting = computed(() => {
-    if (!unref(getShowSettingButton)) {
-      return false;
-    }
-    const settingButtonPosition = unref(getSettingButtonPosition);
-
-    if (settingButtonPosition === SettingButtonPositionEnum.AUTO) {
-      return unref(getShowHeader);
-    }
-    return settingButtonPosition === SettingButtonPositionEnum.HEADER;
   });
 
   const getLogoWidth = computed(() => {
