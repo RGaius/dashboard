@@ -6,20 +6,22 @@ const dashboard: AppRouteModule = {
   path: '/datasource',
   name: 'Datasource',
   component: LAYOUT,
-  redirect: '/datasource/',
+  redirect: '/datasource/index',
   meta: {
     orderNo: 10,
     icon: 'ion:grid-outline',
-    title: t('routes.dashboard.dashboard'),
+    hideChildrenInMenu: true,
+    title: t('routes.datasource.datasource'),
   },
   children: [
     {
-      path: '/',
+      path: '/index',
       name: 'Datasource',
       component: () => import('@/views/datasource/index.vue'),
       meta: {
         // affix: true,
-        title: t('routes.dashboard.analysis'),
+        hideMenu: true,
+        title: t('routes.datasource.datasource'),
       },
     },
   ],
