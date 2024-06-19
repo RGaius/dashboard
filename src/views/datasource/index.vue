@@ -35,7 +35,7 @@
   import { reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { getAccountList } from '@/api/demo/system';
+  import { getDatasourceList } from '@/api/demo/datasource';
   import { PageWrapper } from '@/components/Page';
 
   import { useModal } from '@/components/Modal';
@@ -49,7 +49,7 @@
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, updateTableDataRecord }] = useTable({
     title: '数据源列表',
-    api: getAccountList,
+    api: getDatasourceList,
     rowKey: 'id',
     columns,
     formConfig: {
