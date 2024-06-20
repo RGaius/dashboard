@@ -35,6 +35,7 @@
   import { reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { useGo } from '@/hooks/web/usePage';
   import { getDatasourceList } from '@/api/demo/datasource';
   import { PageWrapper } from '@/components/Page';
 
@@ -44,7 +45,7 @@
   import { columns, searchFormSchema } from './datasource.data';
 
   defineOptions({ name: 'AccountManagement' });
-
+  const go = useGo();
   const [registerModal, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, updateTableDataRecord }] = useTable({
@@ -73,9 +74,7 @@
   });
 
   function handleCreate() {
-    openModal(true, {
-      isUpdate: false,
-    });
+    go('/datasource/type');
   }
 
   function handleEdit(record: Recordable) {

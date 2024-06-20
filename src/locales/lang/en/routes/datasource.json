@@ -1,3 +1,4 @@
 {
-  "datasource": "Datasource"
+  "datasource": "Datasource",
+  "type": "Datasource Type"
 }

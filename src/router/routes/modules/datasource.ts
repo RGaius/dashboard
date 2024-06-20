@@ -24,6 +24,15 @@ const dashboard: AppRouteModule = {
         title: t('routes.datasource.datasource'),
       },
     },
+    {
+      path: 'type',
+      name: 'Type',
+      component: () => import('@/views/datasource/componment/Type.vue'),
+      meta: {
+        title: t('routes.datasource.type'),
+        hideMenu: true,
+      },
+    },
   ],
 };
 
