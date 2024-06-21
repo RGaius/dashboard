@@ -1,3 +1,10 @@
+// 定义类型
+export type DatasourceType = {
+  title: string;
+  icon: string;
+  description: string;
+};
+
 const typeList = [
   {
     title: 'HTTP',
@@ -114,5 +121,7 @@ const typeList = [
 ];
 
 export const getTypeList = (() => {
-  return typeList;
+  return () => {
+    return typeList;
+  };
 })();

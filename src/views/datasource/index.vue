@@ -74,7 +74,7 @@
   });
 
   function handleCreate() {
-    go('/datasource/type');
+    go('/datasource/create');
   }
 
   function handleEdit(record: Recordable) {
