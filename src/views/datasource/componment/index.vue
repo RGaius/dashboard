@@ -16,6 +16,7 @@
       <Step2
         @prev="handleStepPrev"
         @next="handleStep2Next"
+        :selected="selected"
         v-show="current === 1"
         v-if="state.initStep2"
       />
@@ -32,6 +33,7 @@
   defineOptions({ name: 'FormStepPage' });
 
   const current = ref(0);
+  const selected = ref({});
 
   const state = reactive({
     initStep2: false,
@@ -40,7 +42,7 @@
   function handleStep1Next(step1Values: any) {
     current.value++;
     state.initStep2 = true;
-    console.log(step1Values);
+    selected.value = step1Values;
   }
 
   function handleStepPrev() {

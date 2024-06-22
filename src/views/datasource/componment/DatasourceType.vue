@@ -1,7 +1,7 @@
 <template>
   <div :class="`${prefixCls}__content`">
     <List>
-      <Row :gutter="8" style="margin-bottom: 2.5rem">
+      <Row :gutter="8" style="margin-bottom: 2.5rem" justify="space-between">
         <template v-for="item in typeList" :key="item.title">
           <Col xs="12" sm="8" md="6" lg="6" :xxl="4">
             <List.Item>
@@ -43,7 +43,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, unref } from 'vue';
   import Icon from '@/components/Icon/Icon.vue';
   import { getTypeList, DatasourceType } from './data';
   import { EllipsisText } from '@/components/EllipsisText';
@@ -79,7 +79,7 @@
   }
 
   async function onNext() {
-    emit('next', selectedItem);
+    emit('next', unref(selectedItem));
   }
 
   const prefixCls = 'list-card';
@@ -101,7 +101,7 @@
 
     &__card {
       width: 100%;
-      max-width: 334px;
+      max-width: 275px;
       margin-bottom: -8px;
 
       &-icon {
