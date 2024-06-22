@@ -14,3 +14,10 @@ export interface DatasourceParams {
   name: string;
   type: string;
 }
+
+export interface DatasourceSaveModel {
+  id: string | null;
+  name: string;
+  description: string;
+  content: object;
+}

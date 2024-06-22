@@ -28,7 +28,6 @@
         </template>
       </template>
     </BasicTable>
-    <DatasourceModel @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -36,19 +35,15 @@
 
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { useGo } from '@/hooks/web/usePage';
-  import { getDatasourceList } from '@/api/demo/datasource';
+  import { getDatasourceList } from '@/api/datasource/datasource';
   import { PageWrapper } from '@/components/Page';
-
-  import { useModal } from '@/components/Modal';
-  import DatasourceModel from './DatasourceModal.vue';
 
   import { columns, searchFormSchema } from './datasource.data';
 
-  defineOptions({ name: 'AccountManagement' });
+  defineOptions({ name: 'DatasourceManagement' });
   const go = useGo();
-  const [registerModal, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
-  const [registerTable, { reload, updateTableDataRecord }] = useTable({
+  const [registerTable] = useTable({
     title: '数据源列表',
     api: getDatasourceList,
     rowKey: 'id',
@@ -58,11 +53,16 @@
       schemas: searchFormSchema,
       autoSubmitOnEnter: true,
     },
+    fetchSetting: {
+      pageField: 'current',
+      sizeField: 'size',
+      totalField: 'total',
+      listField: 'records',
+    },
     useSearchForm: true,
     showTableSetting: true,
     bordered: true,
     handleSearchInfoFn(info) {
-      console.log('handleSearchInfoFn', info);
       return info;
     },
     actionColumn: {
@@ -79,24 +79,10 @@
 
   function handleEdit(record: Recordable) {
     console.log(record);
-    openModal(true, {
-      record,
-      isUpdate: true,
-    });
+    go(`/datasource/detail?id=${record.id}&type=${record.type}`);
   }
 
   function handleDelete(record: Recordable) {
     console.log(record);
-  }
-
-  function handleSuccess({ isUpdate, values }) {
-    if (isUpdate) {
-      // 演示不刷新表格直接更新内部数据。
-      // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
-      const result = updateTableDataRecord(values.id, values);
-      console.log(result);
-    } else {
-      reload();
-    }
   }
 </script>

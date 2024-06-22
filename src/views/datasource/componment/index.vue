@@ -8,7 +8,7 @@
     <div class="step-form-form">
       <Steps :current="current">
         <Steps.Step title="选择数据源类型" />
-        <Steps.Step title="完成数据源配置" />
+        <Steps.Step :title="`完成${selected.title}数据源配置`" />
       </Steps>
     </div>
     <div class="mt-5">
@@ -32,8 +32,14 @@
 
   defineOptions({ name: 'FormStepPage' });
 
+  const defaultSelectedItem = {
+    title: '',
+    icon: '',
+    description: '',
+  };
+
   const current = ref(0);
-  const selected = ref({});
+  const selected = ref(defaultSelectedItem);
 
   const state = reactive({
     initStep2: false,
@@ -47,6 +53,7 @@
 
   function handleStepPrev() {
     current.value--;
+    selected.value = defaultSelectedItem;
   }
 
   function handleStep2Next(step2Values: any) {
