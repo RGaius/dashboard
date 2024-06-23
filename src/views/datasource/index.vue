@@ -28,19 +28,23 @@
         </template>
       </template>
     </BasicTable>
+    <TypeModel @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { useModal } from '@/components/Modal';
   import { useGo } from '@/hooks/web/usePage';
   import { getDatasourceList } from '@/api/datasource/datasource';
   import { PageWrapper } from '@/components/Page';
+  import TypeModel from './TypeModel.vue';
 
   import { columns, searchFormSchema } from './datasource.data';
 
   defineOptions({ name: 'DatasourceManagement' });
+  const [registerModal, { openModal }] = useModal();
   const go = useGo();
   const searchInfo = reactive<Recordable>({});
   const [registerTable] = useTable({
@@ -74,7 +78,7 @@
   });
 
   function handleCreate() {
-    go('/datasource/create');
+    openModal(true);
   }
 
   function handleEdit(record: Recordable) {
@@ -84,5 +88,10 @@
 
   function handleDelete(record: Recordable) {
     console.log(record);
+  }
+
+  function handleSuccess(values) {
+    console.log(values);
+    go(`/datasource/detail?type=${values.title}`);
   }
 </script>

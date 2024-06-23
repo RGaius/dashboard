@@ -53,7 +53,7 @@ export const Datasource = {
       title: 'URL格式',
       required: true,
       default:
-        'jdbc:mysql://{host}:{port}/{database}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true',
+        'jdbc:mysql://${host}:${port}/${database}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-hidden': true,
