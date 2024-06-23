@@ -11,7 +11,7 @@ export const Datasource = {
     port: {
       type: 'number',
       title: '端口',
-      default: 3306,
+      default: 5432,
       required: true,
       minimum: 1,
       maximum: 65535,
@@ -32,6 +32,14 @@ export const Datasource = {
       'x-decorator': 'FormItem',
       'x-component': 'Password',
     },
+    schema: {
+      type: 'string',
+      title: 'Schema',
+      default: 'public',
+      required: true,
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+    },
     database: {
       type: 'string',
       title: '数据库',
@@ -43,7 +51,7 @@ export const Datasource = {
       type: 'string',
       title: '驱动类',
       required: true,
-      default: 'com.mysql.cj.jdbc.Driver',
+      default: 'org.postgresql.Driver',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-hidden': true,
@@ -52,8 +60,7 @@ export const Datasource = {
       type: 'string',
       title: 'URL格式',
       required: true,
-      default:
-        'jdbc:mysql://${host}:${port}/${database}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true',
+      default: 'jdbc:postgresql://${host}:${port}/${database}?currentSchema=${schema}',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-hidden': true,
@@ -182,7 +189,7 @@ export const Datasource = {
   },
 };
 
-// mysql接口配置
+// postgresql 连接口配置
 export const Interface = {
   type: 'object',
   properties: {
