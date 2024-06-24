@@ -14,6 +14,11 @@
                 onClick: handleEdit.bind(null, record),
               },
               {
+                icon: 'clarity:note-edit-line',
+                tooltip: '创建接口',
+                onClick: handleInterfaceCreate.bind(null, record),
+              },
+              {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
                 tooltip: '删除此数据源',
@@ -37,7 +42,7 @@
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { useModal } from '@/components/Modal';
   import { useGo } from '@/hooks/web/usePage';
-  import { getDatasourceList } from '@/api/datasource/datasource';
+  import { getDatasourcePage } from '@/api/datasource/datasource';
   import { PageWrapper } from '@/components/Page';
   import TypeModel from './TypeModel.vue';
 
@@ -49,7 +54,7 @@
   const searchInfo = reactive<Recordable>({});
   const [registerTable] = useTable({
     title: '数据源列表',
-    api: getDatasourceList,
+    api: getDatasourcePage,
     rowKey: 'id',
     columns,
     formConfig: {
@@ -79,6 +84,11 @@
 
   function handleCreate() {
     openModal(true);
+  }
+
+  function handleInterfaceCreate(record: Recordable) {
+    console.log(record);
+    go(`/interface/detail?datasourceId=${record.id}&type=${record.type}&name=${record.name}`);
   }
 
   function handleEdit(record: Recordable) {

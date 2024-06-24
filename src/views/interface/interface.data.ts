@@ -4,12 +4,12 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 export const columns: BasicColumn[] = [
   {
     title: '名称',
-    dataIndex: 'account',
+    dataIndex: 'name',
     width: 120,
   },
   {
     title: '数据源',
-    dataIndex: 'nickname',
+    dataIndex: 'interfaceName',
     width: 120,
   },
   {
@@ -19,17 +19,17 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '创建人',
-    dataIndex: 'createTime',
+    dataIndex: 'createBy',
     width: 180,
   },
   {
     title: '更新时间',
-    dataIndex: 'createTime',
+    dataIndex: 'updateTime',
     width: 180,
   },
   {
     title: '更新人',
-    dataIndex: 'createTime',
+    dataIndex: 'updateBy',
     width: 180,
   },
 ];
@@ -42,8 +42,8 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'nickname',
-    label: '昵称',
+    field: 'datasourceName',
+    label: '数据源',
     component: 'Input',
     colProps: { span: 8 },
   },

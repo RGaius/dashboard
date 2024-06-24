@@ -28,34 +28,36 @@
         </template>
       </template>
     </BasicTable>
-    <InterfaceModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { getAccountList } from '@/api/demo/system';
+  import { getInterfaceList } from '@/api/interface/interface';
   import { PageWrapper } from '@/components/Page';
 
-  import { useModal } from '@/components/Modal';
-  import InterfaceModal from './InterfaceModal.vue';
-
   import { columns, searchFormSchema } from './interface.data';
+  import { useGo } from '@/hooks/web/usePage';
 
-  defineOptions({ name: 'AccountManagement' });
-
-  const [registerModal, { openModal }] = useModal();
+  defineOptions({ name: 'InterfaceManagement' });
   const searchInfo = reactive<Recordable>({});
-  const [registerTable, { reload, updateTableDataRecord }] = useTable({
+  const go = useGo();
+  const [registerTable] = useTable({
     title: '接口列表',
-    api: getAccountList,
+    api: getInterfaceList,
     rowKey: 'id',
     columns,
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
       autoSubmitOnEnter: true,
+    },
+    fetchSetting: {
+      pageField: 'current',
+      sizeField: 'size',
+      totalField: 'total',
+      listField: 'records',
     },
     useSearchForm: true,
     showTableSetting: true,
@@ -73,31 +75,15 @@
   });
 
   function handleCreate() {
-    openModal(true, {
-      isUpdate: false,
-    });
+    go(`/interface/detail?&type=HTTP`);
   }
 
   function handleEdit(record: Recordable) {
     console.log(record);
-    openModal(true, {
-      record,
-      isUpdate: true,
-    });
+    go(`/interface/detail?id=${record.id}&type=${record.type}`);
   }
 
   function handleDelete(record: Recordable) {
     console.log(record);
-  }
-
-  function handleSuccess({ isUpdate, values }) {
-    if (isUpdate) {
-      // 演示不刷新表格直接更新内部数据。
-      // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
-      const result = updateTableDataRecord(values.id, values);
-      console.log(result);
-    } else {
-      reload();
-    }
   }
 </script>

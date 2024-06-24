@@ -3,15 +3,16 @@ import { defHttp } from '@/utils/http/axios';
 
 enum Api {
   BASE = '/api/datasource/v1',
-  LIST = '/api/datasource/v1/page',
+  PAGE = '/api/datasource/v1/page',
+  LIST = '/api/datasource/v1/list',
   SAVE = '/api/datasource/v1/save',
   UPDATE = '/api/datasource/v1/update',
   TESE = '/api/datasource/v1/test',
 }
 
 // 获取数据源列表
-export const getDatasourceList = (params: DatasourceParams) =>
-  defHttp.get<DatasourceModel>({ url: Api.LIST, params });
+export const getDatasourcePage = (params: DatasourceParams) =>
+  defHttp.get<DatasourceModel>({ url: Api.PAGE, params });
 
 // 保存数据
 export const saveDatasource = (data: DatasourceSaveModel) =>
@@ -28,3 +29,6 @@ export const getDatasourceDetail = (id: string) =>
 // 测试数据源
 export const testDatasource = (data: DatasourceSaveModel) =>
   defHttp.post<DatasourceModel>({ url: Api.TESE, data });
+
+// 数据源列表
+export const getDatasourceList = () => defHttp.get<DatasourceModel>({ url: Api.LIST });
