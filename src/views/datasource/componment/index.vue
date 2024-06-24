@@ -25,7 +25,7 @@
           title="数据源类型"
           :decorator="[FormItem]"
           :component="[Input]"
-          hidden="true"
+          :hidden="true"
         />
         <ObjectField name="content">
           <SchemaField :schema="getSchema" :scope="{ formCollapse, formTab }" />
@@ -79,6 +79,8 @@
     FormTab,
   } from '@formily/antdv';
 
+  import EncryptedPassword from '@/formily/encrypted-password';
+
   const { SchemaField } = createSchemaField({
     components: {
       Input,
@@ -92,6 +94,7 @@
       Editable,
       FormCollapse,
       FormTab,
+      EncryptedPassword,
     },
   });
   const [result, { openDrawer: openResultDrawer }] = useDrawer();
@@ -182,6 +185,7 @@
   async function handleValidate(values) {
     try {
       openFullLoading();
+      values.id = undefined;
       const res = await testDatasource(values);
       openResult(res);
     } catch (error) {

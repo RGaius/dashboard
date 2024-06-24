@@ -8,9 +8,9 @@
   >
     <div :class="`${prefixCls}__content`">
       <List>
-        <Row :gutter="8" justify="space-between">
+        <Row :gutter="8">
           <template v-for="item in typeList" :key="item.title">
-            <Col xs="12" sm="8" md="6" lg="6" :xxl="4">
+            <Col xs="24" sm="12" lg="8" :xxl="6">
               <List.Item>
                 <Card
                   :hoverable="true"
