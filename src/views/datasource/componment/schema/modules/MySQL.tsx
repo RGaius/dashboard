@@ -30,7 +30,7 @@ export const Datasource = {
       title: '密码',
       required: true,
       'x-decorator': 'FormItem',
-      'x-component': 'EncryptedPassword',
+      'x-component': 'Password',
     },
     database: {
       type: 'string',

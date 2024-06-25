@@ -14,8 +14,8 @@
                 onClick: handleEdit.bind(null, record),
               },
               {
-                icon: 'clarity:note-edit-line',
-                tooltip: '创建接口',
+                icon: 'carbon:interface-usage',
+                tooltip: '新增接口',
                 onClick: handleInterfaceCreate.bind(null, record),
               },
               {

@@ -18,7 +18,7 @@
         />
         <Field
           name="datasourceName"
-          title="数据源名称"
+          title="数据源"
           :decorator="[FormItem]"
           :component="[
             Input,
@@ -180,11 +180,12 @@
         values.id = id;
         await updateInterface(values);
         createMessage.success('接口更新成功');
+        go('/interface/index');
       } else {
         await saveInterface(values);
         createMessage.success('接口保存成功');
+        go('/datasource/index');
       }
-      go('/datasource/index');
     } catch (error) {
       createMessage.error('保存接口时发生错误，请稍后重试');
     } finally {

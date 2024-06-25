@@ -9,7 +9,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '数据源',
-    dataIndex: 'interfaceName',
+    dataIndex: 'datasourceName',
     width: 120,
   },
   {

@@ -79,8 +79,6 @@
     FormTab,
   } from '@formily/antdv';
 
-  import EncryptedPassword from '@/formily/encrypted-password';
-
   const { SchemaField } = createSchemaField({
     components: {
       Input,
@@ -94,7 +92,6 @@
       Editable,
       FormCollapse,
       FormTab,
-      EncryptedPassword,
     },
   });
   const [result, { openDrawer: openResultDrawer }] = useDrawer();
