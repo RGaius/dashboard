@@ -49,32 +49,33 @@
   import { Card, Row, Col, List } from 'ant-design-vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useDatasource } from '@/hooks/datasource/useDatasource';
   import Icon from '@/components/Icon/Icon.vue';
   import { EllipsisText } from '@/components/EllipsisText';
-  import { getTypeList, DatasourceType } from './componment/data';
 
   defineOptions({ name: 'DatasourceTypeModal' });
 
   const emit = defineEmits(['success', 'register']);
 
   const { createMessage } = useMessage();
+  const { getDataSourceTypeList } = useDatasource();
 
-  const defaultSelectedItem: DatasourceType = {
+  const defaultSelectedItem = {
     title: '',
     icon: '',
     description: '',
   };
 
   // 数据源类型列表
-  const typeList = ref<DatasourceType[]>([]);
-  const selectedItem = ref<DatasourceType>(defaultSelectedItem);
+  const typeList = ref<any[]>([]);
+  const selectedItem = ref(defaultSelectedItem);
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async () => {
     setModalProps({ confirmLoading: false });
   });
 
   // 设置选中项，若选中项一致，则设置为默认值
-  function onTypeClick(item: DatasourceType) {
+  function onTypeClick(item) {
     if (item.title === selectedItem.value.title) {
       selectedItem.value = defaultSelectedItem;
       return;
@@ -85,8 +86,7 @@
   // 获取数据源类型
   onMounted(async () => {
     try {
-      const response = getTypeList();
-      typeList.value = response;
+      typeList.value = getDataSourceTypeList();
     } catch (error) {
       console.error(error);
       createMessage.error({ content: '加载数据源类型失败！' });

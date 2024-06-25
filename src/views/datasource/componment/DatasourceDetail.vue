@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper :title="getTitle" contentBackground contentClass="p-4">
+  <div>
     <FormProvider :form="form">
       <FormLayout :labelCol="6" :wrapperCol="16">
         <Field
@@ -8,31 +8,6 @@
           :decorator="[FormItem]"
           :component="[Input]"
           :required="true"
-        />
-        <Field
-          name="datasourceId"
-          title="数据源"
-          :decorator="[FormItem]"
-          :component="[Input]"
-          :hidden="true"
-        />
-        <Field
-          name="datasourceName"
-          title="数据源"
-          :decorator="[FormItem]"
-          :component="[
-            Input,
-            {
-              disabled: true,
-            },
-          ]"
-        />
-        <Field
-          name="type"
-          title="接口类型"
-          :decorator="[FormItem]"
-          :component="[Input]"
-          :hidden="true"
         />
         <Field
           name="description"
@@ -44,6 +19,13 @@
               rows: 3,
             },
           ]"
+        />
+        <Field
+          name="type"
+          title="数据源类型"
+          :decorator="[FormItem]"
+          :component="[Input]"
+          :hidden="true"
         />
         <ObjectField name="content">
           <SchemaField :schema="getSchema" :scope="{ formCollapse, formTab }" />
@@ -58,28 +40,27 @@
         </Row>
       </FormLayout>
     </FormProvider>
-  </PageWrapper>
+    <Result @register="result" />
+  </div>
 </template>
 <script lang="ts" setup>
-  import { computed, unref, watch } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { computed, watch } from 'vue';
 
   import { createForm } from '@formily/core';
   import { createSchemaField, FormProvider, ObjectField, Field } from '@formily/vue';
   import { Row, Col } from 'ant-design-vue';
   import {
-    saveInterface,
-    updateInterface,
-    getInterfaceDetail,
-    testInterface,
-  } from '@/api/interface/interface';
-
+    saveDatasource,
+    updateDatasource,
+    getDatasourceDetail,
+    testDatasource,
+  } from '@/api/datasource/datasource';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useGo } from '@/hooks/web/usePage';
   import { useDatasource } from '@/hooks/datasource/useDatasource';
   import { useLoading } from '@/components/Loading';
-  import { PageWrapper } from '@/components/Page';
-
+  import { useDrawer } from '@/components/Drawer';
+  import Result from './Result.vue';
   import {
     FormLayout,
     FormItem,
@@ -95,8 +76,6 @@
     FormTab,
   } from '@formily/antdv';
 
-  import EncryptedPassword from '@/formily/encrypted-password';
-
   const { SchemaField } = createSchemaField({
     components: {
       Input,
@@ -110,50 +89,52 @@
       Editable,
       FormCollapse,
       FormTab,
-      EncryptedPassword,
     },
   });
   const form = createForm();
   const formCollapse = FormCollapse.createFormCollapse();
   const formTab = FormTab.createFormTab();
   const { createMessage } = useMessage();
+  const [result, { openDrawer: openResultDrawer }] = useDrawer();
+
   const go = useGo();
 
   const [openFullLoading, closeFullLoading] = useLoading({
     tip: '加载中...',
   });
-  const route = useRoute();
-  const query = route.query;
 
-  // 初始化 datasourceType 和 isUpdate， 并通过 watch 监控 query 的变化
-  const datasourceType = (query?.type ?? 'HTTP') as string;
-  const isUpdate = !!query?.id;
-  const id = query?.id as string | undefined;
-  const datasourceName = query?.name as string | undefined;
-  const datasourceId = query?.datasourceId as string | undefined;
-  const { getDataSourceSchema } = useDatasource(datasourceType);
+  // 从父组件中获取id和type
+  const props = defineProps({
+    id: String,
+    type: {
+      type: String,
+      required: true, // 如果这个prop是必须的，可以设置required为true
+    },
+  });
+
+  let datasourceType = props.type;
+  const isUpdate = !!props.id;
+  const id = props?.id as string | undefined;
+
   // 定义获取详情并填充表单的函数
   async function fetchAndUpdateFormData() {
     if (!isUpdate || !id) return;
     try {
-      const res = await getInterfaceDetail(id);
+      const res = await getDatasourceDetail(id);
       form.setInitialValues(res);
     } catch (error) {
-      createMessage.error('获取接口详情时出错');
+      createMessage.error('获取数据源详情时出错');
     }
   }
+  const { getDataSourceSchema } = useDatasource(props.type);
 
-  const getTitle = computed(() =>
-    !unref(isUpdate) ? `新增${datasourceName}对应接口` : `更新${datasourceType}接口`,
-  );
-
-  // 使用 watch 监听 datasourceType 的变化，并在需要时获取接口详情
+  // 使用 watch 监听 datasourceType 的变化，并在需要时获取数据源详情
   watch(
     () => datasourceType,
     async (newVal) => {
       if (!newVal) return;
       form.reset();
-      form.setInitialValues({ type: newVal, datasourceName, datasourceId });
+      form.setInitialValues({ type: newVal });
       await fetchAndUpdateFormData(); // 在类型变化后尝试获取详情
     },
     { immediate: true },
@@ -169,31 +150,36 @@
       openFullLoading();
       if (isUpdate) {
         values.id = id;
-        await updateInterface(values);
-        createMessage.success('接口更新成功');
+        await updateDatasource(values);
+        createMessage.success('数据源更新成功');
       } else {
-        await saveInterface(values);
-        createMessage.success('接口保存成功');
+        await saveDatasource(values);
+        createMessage.success('数据源保存成功');
       }
-      go('/interface/index');
+      go('/datasource/index');
     } catch (error) {
-      createMessage.error('保存接口时发生错误，请稍后重试');
+      createMessage.error('保存数据源时发生错误，请稍后重试');
     } finally {
       closeFullLoading();
     }
   }
 
-  // 调用接口验证结果
+  // 调用数据源验证结果
   async function handleValidate(values) {
     try {
       openFullLoading();
       values.id = undefined;
-      await testInterface(values);
+      const res = await testDatasource(values);
+      openResult(res);
     } catch (error) {
-      createMessage.error('验证接口时发生错误，请稍后重试');
+      createMessage.error('验证数据源时发生错误，请稍后重试');
     } finally {
       closeFullLoading();
     }
   }
+
+  // 展示数据源验证结果
+  function openResult(result) {
+    openResultDrawer(true, result);
+  }
 </script>
-<style lang="less" scoped></style>

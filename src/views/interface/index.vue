@@ -5,7 +5,10 @@
         <a-button type="primary" @click="handleCreate">新增接口</a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
+        <template v-if="column.key === 'datasourceName'">
+          <a @click="handleDatasourceDetail(record)">{{ record.datasourceName }}</a>
+        </template>
+        <template v-else-if="column.key === 'action'">
           <TableAction
             :actions="[
               {
@@ -28,6 +31,7 @@
         </template>
       </template>
     </BasicTable>
+    <DatasourceDrawer @register="detail" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -39,6 +43,10 @@
 
   import { columns, searchFormSchema } from './interface.data';
   import { useGo } from '@/hooks/web/usePage';
+  import { useDrawer } from '@/components/Drawer';
+  import DatasourceDrawer from './DatasourceDrawer.vue';
+
+  const [detail, { openDrawer: openDatasourceDetailDrawer }] = useDrawer();
 
   defineOptions({ name: 'InterfaceManagement' });
   const searchInfo = reactive<Recordable>({});
@@ -85,5 +93,10 @@
 
   function handleDelete(record: Recordable) {
     console.log(record);
+  }
+
+  function handleDatasourceDetail(record: Recordable) {
+    const param = { id: record.datasourceId, type: record.type };
+    openDatasourceDetailDrawer(true, param);
   }
 </script>

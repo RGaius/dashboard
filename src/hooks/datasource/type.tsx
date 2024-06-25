@@ -1,11 +1,4 @@
-// 定义类型
-export type DatasourceType = {
-  title: string;
-  icon: string;
-  description: string;
-};
-
-const typeList = [
+export const typeList: any[] = [
   {
     title: 'HTTP',
     icon: 'http|svg',
@@ -119,9 +112,3 @@ const typeList = [
     description: 'Zabbix（Zabbix）是Zabbix技术股份有限公司推出的一款开源的监控报警系统。',
   },
 ];
-
-export const getTypeList = (() => {
-  return () => {
-    return typeList;
-  };
-})();
