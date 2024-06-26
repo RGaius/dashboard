@@ -10,17 +10,6 @@
           :required="true"
         />
         <Field
-          name="description"
-          title="描述"
-          :decorator="[FormItem]"
-          :component="[
-            Input.TextArea,
-            {
-              rows: 3,
-            },
-          ]"
-        />
-        <Field
           name="type"
           title="数据源类型"
           :decorator="[FormItem]"
@@ -32,10 +21,10 @@
         </ObjectField>
         <Row justify="end">
           <Col :span="2">
-            <Submit @submit="handleValidate">验证</Submit>
+            <Submit @submit="handleValidate">测试连接</Submit>
           </Col>
           <Col :span="3">
-            <Submit @submit="handleSubmit">提交</Submit>
+            <Submit @submit="handleSubmit">保存</Submit>
           </Col>
         </Row>
       </FormLayout>
@@ -45,22 +34,23 @@
 </template>
 <script lang="ts" setup>
   import { computed, watch } from 'vue';
-
   import { createForm } from '@formily/core';
   import { createSchemaField, FormProvider, ObjectField, Field } from '@formily/vue';
-  import { Row, Col } from 'ant-design-vue';
+
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { useGo } from '@/hooks/web/usePage';
+  import { useDatasource } from '@/hooks/datasource/useDatasource';
+
   import {
     saveDatasource,
     updateDatasource,
     getDatasourceDetail,
     testDatasource,
   } from '@/api/datasource/datasource';
-  import { useMessage } from '@/hooks/web/useMessage';
-  import { useGo } from '@/hooks/web/usePage';
-  import { useDatasource } from '@/hooks/datasource/useDatasource';
   import { useLoading } from '@/components/Loading';
   import { useDrawer } from '@/components/Drawer';
   import Result from './Result.vue';
+  import { Row, Col } from 'ant-design-vue';
   import {
     FormLayout,
     FormItem,
@@ -94,11 +84,9 @@
   const form = createForm();
   const formCollapse = FormCollapse.createFormCollapse();
   const formTab = FormTab.createFormTab();
+  const go = useGo();
   const { createMessage } = useMessage();
   const [result, { openDrawer: openResultDrawer }] = useDrawer();
-
-  const go = useGo();
-
   const [openFullLoading, closeFullLoading] = useLoading({
     tip: '加载中...',
   });
@@ -108,7 +96,7 @@
     id: String,
     type: {
       type: String,
-      required: true, // 如果这个prop是必须的，可以设置required为true
+      required: true,
     },
   });
 

@@ -5,10 +5,10 @@
         <a-button type="primary" @click="handleCreate">新增接口</a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'datasourceName'">
-          <a @click="handleDatasourceDetail(record)">{{ record.datasourceName }}</a>
-        </template>
-        <template v-else-if="column.key === 'action'">
+        <!--        <template v-if="column.key === 'datasourceName'">-->
+        <!--          <a @click="handleDatasourceDetail(record)">{{ record.datasourceName }}</a>-->
+        <!--        </template>-->
+        <template v-if="column.key === 'action'">
           <TableAction
             :actions="[
               {
@@ -37,7 +37,7 @@
 <script lang="ts" setup>
   import { reactive } from 'vue';
 
-  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { getInterfaceList } from '@/api/interface/interface';
   import { PageWrapper } from '@/components/Page';
 

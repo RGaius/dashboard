@@ -65,7 +65,7 @@ export const Datasource = {
       default: false,
       enum: [
         {
-          label: '启动',
+          label: '启用',
           value: true,
         },
         {
@@ -193,7 +193,7 @@ export const Interface = {
       'x-decorator': 'FormItem',
       'x-component': 'Input.TextArea',
       'x-component-props': {
-        rows: '5',
+        rows: 5,
       },
     },
   },

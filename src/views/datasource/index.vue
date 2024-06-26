@@ -53,7 +53,7 @@
   const go = useGo();
   const searchInfo = reactive<Recordable>({});
   const [registerTable] = useTable({
-    title: '数据源列表',
+    title: '数据源',
     api: getDatasourcePage,
     rowKey: 'id',
     columns,

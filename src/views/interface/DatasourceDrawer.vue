@@ -7,12 +7,13 @@
     placement="right"
   >
     <div>
-      <!-- <DatasourceDetail :id="id" :type="type" /> -->
+      <DatasourceDetail :id="id" :type="type" />
     </div>
   </BasicDrawer>
 </template>
 <script lang="ts" setup>
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import DatasourceDetail from '@/views/datasource/detail/DatasourceDetail.vue';
   import { ref } from 'vue';
 
   const id = ref('');

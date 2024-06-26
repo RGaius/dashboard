@@ -2,15 +2,17 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="数据源类型"
+    title="选择数据源类型"
+    :canFullscreen="false"
+    :centered="true"
     @ok="handleSubmit"
-    width="80%"
+    width="1080px"
   >
     <div :class="`${prefixCls}__content`">
       <List>
-        <Row :gutter="8">
+        <Row>
           <template v-for="item in typeList" :key="item.title">
-            <Col xs="24" sm="12" lg="8" :xxl="6">
+            <Col xs="24" lg="8" :xxl="4">
               <List.Item>
                 <Card
                   :hoverable="true"
@@ -28,12 +30,9 @@
                   </div>
                   <div :class="`${prefixCls}__card-title`">
                     <Icon class="icon" v-if="item.icon" :icon="item.icon" size="50" />
-                    {{ item.title }}
                   </div>
                   <div :class="`${prefixCls}__card-detail`">
-                    <EllipsisText :line="3">
-                      {{ item.description }}
-                    </EllipsisText>
+                    {{ item.title }}
                   </div>
                 </Card>
               </List.Item>
@@ -45,13 +44,12 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, unref, onMounted } from 'vue';
-  import { Card, Row, Col, List } from 'ant-design-vue';
+  import { onMounted, ref, unref } from 'vue';
+  import { Card, Col, List, Row } from 'ant-design-vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useDatasource } from '@/hooks/datasource/useDatasource';
   import Icon from '@/components/Icon/Icon.vue';
-  import { EllipsisText } from '@/components/EllipsisText';
 
   defineOptions({ name: 'DatasourceTypeModal' });
 
@@ -129,9 +127,11 @@
     }
 
     &__card {
-      width: 100%;
-      max-width: 275px;
-      margin-bottom: -8px;
+      display: inline-block;
+      vertical-align: top;
+      text-align: center;
+      width: 140px;
+      height: 120px;
 
       &-icon {
         // icon图标悬浮于右上侧
@@ -158,18 +158,13 @@
         font-weight: 500;
 
         .icon {
-          margin-top: -5px;
-          margin-right: 10px;
           font-size: 38px !important;
         }
       }
 
       &-detail {
-        padding-top: 10px;
-        padding-left: 30px;
         color: @text-color-secondary;
         font-size: 14px;
-        height: 66px;
       }
     }
 

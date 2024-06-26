@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper :title="getTitle" contentBackground contentClass="p-4">
+  <div>
     <FormProvider :form="form">
       <FormLayout :labelCol="6" :wrapperCol="16">
         <Field
@@ -58,41 +58,39 @@
         </Row>
       </FormLayout>
     </FormProvider>
-  </PageWrapper>
+  </div>
 </template>
 <script lang="ts" setup>
-  import { computed, unref, watch } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { computed, watch } from 'vue';
 
   import { createForm } from '@formily/core';
-  import { createSchemaField, FormProvider, ObjectField, Field } from '@formily/vue';
-  import { Row, Col } from 'ant-design-vue';
+  import { createSchemaField, Field, FormProvider, ObjectField } from '@formily/vue';
+  import { Col, Row } from 'ant-design-vue';
   import {
-    saveInterface,
-    updateInterface,
     getInterfaceDetail,
+    saveInterface,
     testInterface,
+    updateInterface,
   } from '@/api/interface/interface';
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { useGo } from '@/hooks/web/usePage';
   import { useDatasource } from '@/hooks/datasource/useDatasource';
   import { useLoading } from '@/components/Loading';
-  import { PageWrapper } from '@/components/Page';
 
   import {
-    FormLayout,
-    FormItem,
-    Input,
-    Password,
-    InputNumber,
-    Radio,
-    Submit,
-    Select,
     ArrayTable,
     Editable,
     FormCollapse,
+    FormItem,
+    FormLayout,
     FormTab,
+    Input,
+    InputNumber,
+    Password,
+    Radio,
+    Select,
+    Submit,
   } from '@formily/antdv';
 
   import EncryptedPassword from '@/formily/encrypted-password';
@@ -122,16 +120,25 @@
   const [openFullLoading, closeFullLoading] = useLoading({
     tip: '加载中...',
   });
-  const route = useRoute();
-  const query = route.query;
+  // 从父组件中获取id和type
+  const props = defineProps({
+    id: String,
+    type: {
+      type: String,
+      required: true,
+    },
+    datasourceName: String,
+    datasourceId: String,
+  });
 
   // 初始化 datasourceType 和 isUpdate， 并通过 watch 监控 query 的变化
-  const datasourceType = (query?.type ?? 'HTTP') as string;
-  const isUpdate = !!query?.id;
-  const id = query?.id as string | undefined;
-  const datasourceName = query?.name as string | undefined;
-  const datasourceId = query?.datasourceId as string | undefined;
-  const { getDataSourceSchema } = useDatasource(datasourceType);
+  const datasourceType = props.type;
+  const isUpdate = !!props.id;
+  const id = props?.id as string | undefined;
+  const datasourceName = props.datasourceName;
+  const datasourceId = props.datasourceId;
+  const { getInterfaceSchema } = useDatasource(datasourceType);
+
   // 定义获取详情并填充表单的函数
   async function fetchAndUpdateFormData() {
     if (!isUpdate || !id) return;
@@ -142,10 +149,6 @@
       createMessage.error('获取接口详情时出错');
     }
   }
-
-  const getTitle = computed(() =>
-    !unref(isUpdate) ? `新增${datasourceName}对应接口` : `更新${datasourceType}接口`,
-  );
 
   // 使用 watch 监听 datasourceType 的变化，并在需要时获取接口详情
   watch(
@@ -160,7 +163,7 @@
   ); // 立即执行以处理初始设置
 
   const getSchema = computed(() => {
-    return getDataSourceSchema();
+    return getInterfaceSchema();
   });
 
   // 优化 handleSubmit 函数
