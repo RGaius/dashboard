@@ -5,11 +5,33 @@
     :title="getTitle"
     :canFullscreen="false"
     :centered="true"
-    @ok="handleSubmit"
+    :maskClosable="false"
+    :wrapperFooterOffset="100"
     width="1080px"
   >
     <DatasourceType @selected="onTypeClick" v-if="!selectedItem.type" />
-    <DatasourceForm v-else-if="selectedItem.type" :type="selectedItem.type" :id="selectedItem.id" />
+    <DatasourceForm
+      ref="formRef"
+      v-else-if="selectedItem.type"
+      :type="selectedItem.type"
+      :id="selectedItem.id"
+    />
+    <!--  定义title区域，当选择类型时，显示字符串 选择数据源类型 当前有数据源类型时，显示回退按钮 -->
+    <template #title>
+      <div v-if="!selectedItem.type">选择数据源类型</div>
+      <div v-else>
+        <div @click="onBackClick" class="back-btn">
+          <LeftOutlined />
+          <span>返回</span>
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <div v-if="showBtn">
+        <a-button @click="handleCancel"> 测试连接</a-button>
+        <a-button type="primary" @click="handleSubmit"> 提交</a-button>
+      </div>
+    </template>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -19,6 +41,7 @@
   import { useDatasource } from '@/hooks/datasource/useDatasource';
   import DatasourceType from './DatasourceType.vue';
   import DatasourceForm from './DatasourceForm.vue';
+  import { LeftOutlined } from '@ant-design/icons-vue';
 
   defineOptions({ name: 'DatasourceTypeModal' });
 
@@ -35,6 +58,7 @@
   // 数据源类型列表
   const typeList = ref<any[]>([]);
   const selectedItem = ref(defaultSelectedItem);
+  const formRef = ref(null);
 
   function initSelectedItem(defaultValue) {
     selectedItem.value = defaultValue;
@@ -55,6 +79,14 @@
     return unref(selectedItem).type ? '' : '选择数据源类型';
   });
 
+  const showBtn = computed(() => {
+    return !!unref(selectedItem).type;
+  });
+
+  function onBackClick() {
+    selectedItem.value = defaultSelectedItem;
+  }
+
   // 获取数据源类型
   onMounted(async () => {
     try {
@@ -66,20 +98,22 @@
   });
 
   async function handleSubmit() {
-    try {
-      if (!unref(selectedItem).type) {
-        createMessage.error({ content: '请选择数据源类型！' });
-        return;
-      }
+    if (formRef.value) {
       setModalProps({ confirmLoading: true });
+      await formRef.value.handleSubmit();
       await closeModal(); // 确保closeModal的异步操作完成
-      emit('success', unref(selectedItem));
-    } catch (error) {
-      console.error(error);
-      createMessage.error({ content: '处理数据源类型选择时发生错误！' });
-    } finally {
+      setModalProps({ confirmLoading: false });
+      emit('success');
+    }
+  }
+
+  async function handleCancel() {
+    if (formRef.value) {
+      setModalProps({ confirmLoading: true });
+      await formRef.value.handleValidate();
       setModalProps({ confirmLoading: false });
     }
+    return false;
   }
 </script>
 
@@ -149,6 +183,13 @@
       text-align: right;
       background: #fff;
       border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+  }
+  .back-btn {
+    cursor: pointer;
+    color: @primary-color;
+    &:hover {
+      color: @primary-color;
     }
   }
 </style>

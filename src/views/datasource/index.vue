@@ -52,7 +52,7 @@
   const [registerModal, { openModal }] = useModal();
   const go = useGo();
   const searchInfo = reactive<Recordable>({});
-  const [registerTable] = useTable({
+  const [registerTable, { reload }] = useTable({
     title: '数据源',
     api: getDatasourcePage,
     rowKey: 'id',
@@ -100,7 +100,6 @@
   }
 
   function handleSuccess(values) {
-    console.log(values);
-    go(`/datasource/info?type=${values.type}`);
+    reload();
   }
 </script>

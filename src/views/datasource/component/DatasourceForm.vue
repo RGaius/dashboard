@@ -25,14 +25,6 @@
         <ObjectField name="content">
           <SchemaField :schema="schema" :scope="{ formCollapse, formTab }" />
         </ObjectField>
-        <Row justify="end">
-          <Col :span="2">
-            <Submit @submit="handleValidate">测试连接</Submit>
-          </Col>
-          <Col :span="3">
-            <Submit @submit="handleSubmit">保存</Submit>
-          </Col>
-        </Row>
       </FormLayout>
     </FormProvider>
     <ValidateResult @register="result" />
@@ -44,7 +36,6 @@
   import { createSchemaField, Field, FormProvider, ObjectField } from '@formily/vue';
 
   import { useMessage } from '@/hooks/web/useMessage';
-  import { useGo } from '@/hooks/web/usePage';
   import { useDatasource } from '@/hooks/datasource/useDatasource';
 
   import {
@@ -56,7 +47,7 @@
   import { useLoading } from '@/components/Loading';
   import { useDrawer } from '@/components/Drawer';
   import ValidateResult from './ValidateResult.vue';
-  import { Col, Divider, Row } from 'ant-design-vue';
+  import { Divider } from 'ant-design-vue';
   import {
     ArrayTable,
     Editable,
@@ -69,7 +60,6 @@
     Password,
     Radio,
     Select,
-    Submit,
   } from '@formily/antdv';
   import Icon from '@/components/Icon/Icon.vue';
 
@@ -91,7 +81,6 @@
   const form = createForm();
   const formCollapse = FormCollapse.createFormCollapse();
   const formTab = FormTab.createFormTab();
-  const go = useGo();
   const { createMessage } = useMessage();
   const [result, { openDrawer: openResultDrawer }] = useDrawer();
   const [openFullLoading, closeFullLoading] = useLoading({
@@ -108,8 +97,14 @@
     },
   });
 
+  // 暴露提交和测试连接的函数
+  defineExpose({
+    handleSubmit,
+    handleValidate,
+  });
+
   const schema = ref({});
-  const isUpdate = computed(() => !props.id);
+  const isUpdate = computed(() => !!props.id);
 
   const getLogo = computed(() => {
     return `${props.type.toLowerCase()}|svg`;
@@ -141,9 +136,10 @@
   );
 
   // 优化 handleSubmit 函数
-  async function handleSubmit(values) {
+  async function handleSubmit() {
     try {
       openFullLoading();
+      const values = await form.submit();
       if (unref(isUpdate)) {
         values.id = props.id;
         await updateDatasource(values);
@@ -152,23 +148,22 @@
         await saveDatasource(values);
         createMessage.success('数据源保存成功');
       }
-      go('/datasource/index');
-    } catch (error) {
-      createMessage.error('保存数据源时发生错误，请稍后重试');
     } finally {
       closeFullLoading();
     }
   }
 
   // 调用数据源验证结果
-  async function handleValidate(values) {
+  async function handleValidate() {
     try {
       openFullLoading();
+      const values = await form.submit();
       values.id = undefined;
       const res = await testDatasource(values);
       openResult(res);
+      return Promise.resolve(res);
     } catch (error) {
-      createMessage.error('验证数据源时发生错误，请稍后重试');
+      return Promise.reject(error);
     } finally {
       closeFullLoading();
     }

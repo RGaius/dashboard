@@ -1,5 +1,12 @@
 <template>
-  <BasicDrawer v-bind="$attrs" @register="register" title="控制台" width="50%" placement="bottom">
+  <BasicDrawer
+    v-bind="$attrs"
+    @register="register"
+    title="控制台"
+    placement="bottom"
+    :footerHeight="40"
+    :closable="false"
+  >
     <div> {{ result.message }}</div>
   </BasicDrawer>
 </template>
