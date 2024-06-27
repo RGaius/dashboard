@@ -1,86 +1,86 @@
 export const typeList: any[] = [
   {
-    title: 'HTTP',
+    type: 'HTTP',
     icon: 'http|svg',
   },
   {
-    title: 'MySQL',
+    type: 'MySQL',
     icon: 'mysql|svg',
   },
   {
-    title: 'MariaDB',
+    type: 'MariaDB',
     icon: 'mariadb|svg',
   },
   {
-    title: 'Oracle',
+    type: 'Oracle',
     icon: 'oracle|svg',
   },
   {
-    title: 'PostgreSQL',
+    type: 'PostgreSQL',
     icon: 'postgresql|svg',
   },
   {
-    title: 'MSSQL',
+    type: 'MSSQL',
     icon: 'mssql|svg',
   },
   {
-    title: 'DB2',
+    type: 'DB2',
     icon: 'db2|svg',
   },
   {
-    title: '达梦',
+    type: 'DaMeng',
     icon: 'dameng|svg',
   },
   {
-    title: 'GussDB',
+    type: 'GussDB',
     icon: 'gussdb|svg',
   },
   {
-    title: 'TiDB',
+    type: 'TiDB',
     icon: 'tidb|svg',
   },
   {
-    title: 'Clickhouse',
+    type: 'Clickhouse',
     icon: 'clickhouse|svg',
   },
   {
-    title: 'Gbase',
+    type: 'Gbase',
     icon: 'gbase|svg',
   },
   {
-    title: 'Redis',
+    type: 'Redis',
     icon: 'redis|svg',
   },
   {
-    title: 'Elasticsearch',
+    type: 'Elasticsearch',
     icon: 'elasticsearch|svg',
   },
   {
-    title: 'MongoDB',
+    type: 'MongoDB',
     icon: 'mongodb|svg',
   },
   {
-    title: 'Kafka',
+    type: 'Kafka',
     icon: 'kafka|svg',
   },
   {
-    title: 'RocketMQ',
+    type: 'RocketMQ',
     icon: 'rocketmq|svg',
   },
   {
-    title: 'gRpc',
+    type: 'gRpc',
     icon: 'grpc|svg',
   },
   {
-    title: 'Dubbo',
+    type: 'Dubbo',
     icon: 'dubbo|svg',
   },
   {
-    title: 'Prometheus',
+    type: 'Prometheus',
     icon: 'prometheus|svg',
   },
   {
-    title: 'Zabbix',
+    type: 'Zabbix',
     icon: 'zabbix|svg',
   },
 ];

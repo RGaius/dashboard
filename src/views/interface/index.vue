@@ -31,7 +31,6 @@
         </template>
       </template>
     </BasicTable>
-    <DatasourceDrawer @register="detail" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -43,10 +42,6 @@
 
   import { columns, searchFormSchema } from './interface.data';
   import { useGo } from '@/hooks/web/usePage';
-  import { useDrawer } from '@/components/Drawer';
-  import DatasourceDrawer from './DatasourceDrawer.vue';
-
-  const [detail, { openDrawer: openDatasourceDetailDrawer }] = useDrawer();
 
   defineOptions({ name: 'InterfaceManagement' });
   const searchInfo = reactive<Recordable>({});
@@ -83,20 +78,15 @@
   });
 
   function handleCreate() {
-    go(`/interface/detail?&type=HTTP`);
+    go(`/interface/info?&type=HTTP`);
   }
 
   function handleEdit(record: Recordable) {
     console.log(record);
-    go(`/interface/detail?id=${record.id}&type=${record.type}`);
+    go(`/interface/info?id=${record.id}&type=${record.type}`);
   }
 
   function handleDelete(record: Recordable) {
     console.log(record);
-  }
-
-  function handleDatasourceDetail(record: Recordable) {
-    const param = { id: record.datasourceId, type: record.type };
-    openDatasourceDetailDrawer(true, param);
   }
 </script>

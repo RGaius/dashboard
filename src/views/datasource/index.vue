@@ -33,18 +33,18 @@
         </template>
       </template>
     </BasicTable>
-    <TypeModel @register="registerModal" @success="handleSuccess" />
+    <DatasourceModel @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
 
-  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
   import { useGo } from '@/hooks/web/usePage';
   import { getDatasourcePage } from '@/api/datasource/datasource';
   import { PageWrapper } from '@/components/Page';
-  import TypeModel from './TypeModel.vue';
+  import DatasourceModel from './component/DatasourceModel.vue';
 
   import { columns, searchFormSchema } from './datasource.data';
 
@@ -83,17 +83,16 @@
   });
 
   function handleCreate() {
-    openModal(true);
+    openModal(true, { type: undefined });
   }
 
   function handleInterfaceCreate(record: Recordable) {
     console.log(record);
-    go(`/interface/detail?datasourceId=${record.id}&type=${record.type}&name=${record.name}`);
+    go(`/interface/info?datasourceId=${record.id}&type=${record.type}&name=${record.name}`);
   }
 
   function handleEdit(record: Recordable) {
-    console.log(record);
-    go(`/datasource/detail?id=${record.id}&type=${record.type}`);
+    openModal(true, { type: record.type, id: record.id });
   }
 
   function handleDelete(record: Recordable) {
@@ -102,6 +101,6 @@
 
   function handleSuccess(values) {
     console.log(values);
-    go(`/datasource/detail?type=${values.title}`);
+    go(`/datasource/info?type=${values.type}`);
   }
 </script>

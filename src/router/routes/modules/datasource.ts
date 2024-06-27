@@ -25,9 +25,9 @@ const dashboard: AppRouteModule = {
       },
     },
     {
-      path: 'detail',
-      name: 'DatasourceDetail',
-      component: () => import('@/views/datasource/detail/index.vue'),
+      path: 'info',
+      name: 'DatasourceInfo',
+      component: () => import('@/views/datasource/component/DatasourceInfo.vue'),
       meta: {
         title: t('routes.datasource.type'),
         hideMenu: true,

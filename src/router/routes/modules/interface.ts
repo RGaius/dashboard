@@ -25,9 +25,9 @@ const dashboard: AppRouteModule = {
       },
     },
     {
-      path: 'detail',
-      name: 'InterfaceDetail',
-      component: () => import('@/views/interface/detail/index.vue'),
+      path: 'info',
+      name: 'InterfaceInfo',
+      component: () => import('@/views/interface/component/InterfaceInfo.vue'),
       meta: {
         // affix: true,
         hideMenu: true,

@@ -25,15 +25,17 @@ const initializeMaps = () => {
   return { datasourceTypeMap, interfaceTypeMap };
 };
 
-export function useDatasource(type?: string) {
+export function useDatasource() {
   const { datasourceTypeMap, interfaceTypeMap } = initializeMaps();
-  function getDataSourceSchema() {
+
+  function getDataSourceSchema(type?: string) {
     if (!type) {
-      return null;
+      return {};
     }
     return datasourceTypeMap[type];
   }
-  function getInterfaceSchema() {
+
+  function getInterfaceSchema(type?: string) {
     if (!type) {
       return null;
     }
