@@ -6,7 +6,7 @@ enum Api {
   LIST = '/api/interface/v1/page',
   SAVE = '/api/interface/v1/save',
   UPDATE = '/api/interface/v1/update',
-  TESE = '/api/interface/v1/test',
+  TEST = '/api/interface/v1/test',
 }
 
 // 获取数据源列表
@@ -27,4 +27,4 @@ export const getInterfaceDetail = (id: string) =>
 
 // 测试数据源
 export const testInterface = (data: InterfaceSaveModel) =>
-  defHttp.post<InterfaceModel>({ url: Api.TESE, data });
+  defHttp.post<InterfaceModel>({ url: Api.TEST, data });

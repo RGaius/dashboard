@@ -37,7 +37,7 @@ export function useDatasource() {
 
   function getInterfaceSchema(type?: string) {
     if (!type) {
-      return null;
+      return {};
     }
     return interfaceTypeMap[type];
   }

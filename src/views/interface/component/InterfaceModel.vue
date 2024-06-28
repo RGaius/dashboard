@@ -10,19 +10,21 @@
     :showCancelBtn="false"
     :showOkBtn="false"
     width="1080px"
-    :minHeight="500"
+    :minHeight="360"
     :closeFunc="initSelectedItem"
   >
-    <DatasourceType v-if="!selectedItem.type" @selected="onTypeClick" />
-    <DatasourceForm
+    <DatasourceCard v-if="!selectedItem.type" @selected="onDatasourceClick" />
+    <InterfaceForm
       v-else-if="selectedItem.type"
       :type="selectedItem.type"
       :id="selectedItem.id"
+      :datasource-id="selectedItem.datasourceId"
+      :datasource-name="selectedItem.datasourceName"
       @submit-after="onSuccess"
     />
     <!--  定义title区域，当选择类型时，显示字符串 选择数据源类型 当前有数据源类型时，显示回退按钮 -->
     <template #title>
-      <div v-if="!selectedItem.type">选择数据源类型</div>
+      <div v-if="!selectedItem.type">选择数据源</div>
       <div v-else>
         <div @click="onBackClick" class="back-btn">
           <LeftOutlined />
@@ -37,11 +39,11 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useDatasource } from '@/hooks/datasource/useDatasource';
-  import DatasourceType from './DatasourceType.vue';
-  import DatasourceForm from './DatasourceForm.vue';
+  import InterfaceForm from './InterfaceForm.vue';
   import { LeftOutlined } from '@ant-design/icons-vue';
+  import DatasourceCard from '@/views/datasource/component/DatasourceCard.vue';
 
-  defineOptions({ name: 'DatasourceTypeModal' });
+  defineOptions({ name: 'InterfaceModal' });
 
   const emit = defineEmits(['success', 'register']);
 
@@ -51,6 +53,8 @@
   const defaultSelectedItem = {
     type: undefined,
     id: undefined,
+    datasourceId: undefined,
+    datasourceName: undefined,
   };
 
   // 数据源类型列表
@@ -67,16 +71,18 @@
     setModalProps({ confirmLoading: false });
   });
 
-  // 设置选中项，若选中项一致，则设置为默认值
-  function onTypeClick(item) {
-    selectedItem.value = item;
-  }
-
   const getTitle = computed(() => {
-    return unref(selectedItem).type ? '' : '选择数据源类型';
+    return unref(selectedItem).type ? '' : '选择数据源';
   });
 
+  // 设置选中项，若选中项一致，则设置为默认值
+  function onDatasourceClick(item) {
+    const { datasourceId, name, type } = item;
+    selectedItem.value = { ...unref(item), type, datasourceId, datasourceName: name };
+  }
+
   function onBackClick() {
+    console.info('data', selectedItem.value);
     if (selectedItem.value.id) {
       closeModal();
     } else {
@@ -90,7 +96,7 @@
       typeList.value = getDataSourceTypeList();
     } catch (error) {
       console.error(error);
-      createMessage.error({ content: '加载数据源类型失败！' });
+      createMessage.error({ content: '加载数据源失败！' });
     }
   });
 
@@ -144,17 +150,6 @@
         color: @text-color-secondary;
         font-size: 14px;
       }
-    }
-
-    // 固定为最下方
-    &__footer {
-      position: fixed;
-      padding: 12px 24px;
-      width: 100%;
-      bottom: 0;
-      text-align: right;
-      background: #fff;
-      border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
   }
 

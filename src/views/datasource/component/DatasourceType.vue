@@ -104,16 +104,5 @@
         font-size: 14px;
       }
     }
-
-    // 固定为最下方
-    &__footer {
-      position: fixed;
-      padding: 12px 24px;
-      width: 100%;
-      bottom: 0;
-      text-align: right;
-      background: #fff;
-      border-top: 1px solid rgba(0, 0, 0, 0.06);
-    }
   }
 </style>

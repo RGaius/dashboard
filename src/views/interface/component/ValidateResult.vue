@@ -3,19 +3,19 @@
     v-bind="$attrs"
     @register="register"
     title="控制台"
-    placement="bottom"
-    :footerHeight="40"
     :closable="false"
-    :style="{ position: 'absolute' }"
+    placement="bottom"
+    :footerHeight="60"
   >
-    <div> {{ result.message }}</div>
+    <CodeEditor v-model:value="result" />
   </BasicDrawer>
 </template>
 <script lang="ts" setup>
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { ref } from 'vue';
+  import { CodeEditor } from '@/components/CodeEditor';
 
-  const result = ref({ message: '' });
+  const result = ref(null);
 
   const [register] = useDrawerInner((data) => {
     result.value = data;

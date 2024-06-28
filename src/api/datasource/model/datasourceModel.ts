@@ -1,3 +1,5 @@
+import { BasicPageListResult } from '@/api/model/baseModel';
+
 export interface DatasourceModel {
   id: string;
   name: string;
@@ -7,12 +9,15 @@ export interface DatasourceModel {
   updateTime: string;
   createBy: string;
   updateBy: string;
+
   [key: string]: string | number;
 }
 
 export interface DatasourceParams {
-  name: string;
-  type: string;
+  name?: string;
+  type?: string;
+  current?: number;
+  size?: number;
 }
 
 export interface DatasourceSaveModel {
@@ -21,3 +26,5 @@ export interface DatasourceSaveModel {
   description: string;
   content: object;
 }
+
+export type DatasourcePageListModel = BasicPageListResult<DatasourceModel>;

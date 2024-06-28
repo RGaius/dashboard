@@ -2,10 +2,20 @@
   <div>
     <FormProvider :form="form">
       <FormLayout :labelCol="6" :wrapperCol="16">
-        <div class="icon-box">
-          <Icon class="icon" :icon="getLogo" size="32" />
-          <div class="title">{{ type }}</div>
-        </div>
+        <Row justify="space-between">
+          <Col :span="4">
+            <div class="icon-box">
+              <Icon class="icon" :icon="getLogo" size="32" />
+              <div class="title">{{ type }}</div>
+            </div>
+          </Col>
+          <Col :span="4">
+            <div class="btn-group">
+              <a-button @click="handleValidate">测试连接</a-button>
+              <a-button type="primary" @click="handleSubmit">提交</a-button>
+            </div>
+          </Col>
+        </Row>
         <Divider orientation="left" :plain="true">基础信息</Divider>
         <Field
           name="name"
@@ -47,7 +57,7 @@
   import { useLoading } from '@/components/Loading';
   import { useDrawer } from '@/components/Drawer';
   import ValidateResult from './ValidateResult.vue';
-  import { Divider } from 'ant-design-vue';
+  import { Col, Divider, Row } from 'ant-design-vue';
   import {
     ArrayTable,
     Editable,
@@ -87,6 +97,7 @@
     tip: '加载中...',
   });
   const { getDataSourceSchema } = useDatasource();
+  const emits = defineEmits(['submitAfter']);
 
   // 从父组件中获取id和type
   const props = defineProps({
@@ -95,12 +106,6 @@
       type: String,
       required: true,
     },
-  });
-
-  // 暴露提交和测试连接的函数
-  defineExpose({
-    handleSubmit,
-    handleValidate,
   });
 
   const schema = ref({});
@@ -127,7 +132,7 @@
     () => props.type,
     async (newVal) => {
       if (!newVal) return;
-      form.reset();
+      await form.reset();
       form.setInitialValues({ type: newVal });
       schema.value = getDataSourceSchema(newVal);
       await fetchAndUpdateFormData(); // 在类型变化后尝试获取详情
@@ -148,6 +153,7 @@
         await saveDatasource(values);
         createMessage.success('数据源保存成功');
       }
+      emits('submitAfter', values);
     } finally {
       closeFullLoading();
     }
@@ -183,7 +189,7 @@
 
   .icon-box::before {
     position: relative;
-    width: 5%;
+    width: 32%;
     transform: translateY(50%);
     content: '';
   }
@@ -196,5 +202,11 @@
     color: rgb(29, 33, 41);
     margin-left: 8px;
     padding: 0;
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>

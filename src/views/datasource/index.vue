@@ -34,6 +34,7 @@
       </template>
     </BasicTable>
     <DatasourceModel @register="registerModal" @success="handleSuccess" />
+    <InterfaceModel @register="registerInterfaceModal" @success="openInterfaceModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -41,16 +42,16 @@
 
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
-  import { useGo } from '@/hooks/web/usePage';
   import { getDatasourcePage } from '@/api/datasource/datasource';
   import { PageWrapper } from '@/components/Page';
   import DatasourceModel from './component/DatasourceModel.vue';
+  import InterfaceModel from '@/views/interface/component/InterfaceModel.vue';
 
   import { columns, searchFormSchema } from './datasource.data';
 
   defineOptions({ name: 'DatasourceManagement' });
   const [registerModal, { openModal }] = useModal();
-  const go = useGo();
+  const [registerInterfaceModal, { openModal: openInterfaceModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload }] = useTable({
     title: '数据源',
@@ -88,7 +89,11 @@
 
   function handleInterfaceCreate(record: Recordable) {
     console.log(record);
-    go(`/interface/info?datasourceId=${record.id}&type=${record.type}&name=${record.name}`);
+    openInterfaceModal(true, {
+      type: record.type,
+      datasourceId: record.id,
+      datasourceName: record.name,
+    });
   }
 
   function handleEdit(record: Recordable) {
@@ -99,7 +104,7 @@
     console.log(record);
   }
 
-  function handleSuccess(values) {
+  function handleSuccess() {
     reload();
   }
 </script>

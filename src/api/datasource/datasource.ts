@@ -1,4 +1,9 @@
-import { DatasourceModel, DatasourceParams, DatasourceSaveModel } from './model/datasourceModel';
+import {
+  DatasourceModel,
+  DatasourcePageListModel,
+  DatasourceParams,
+  DatasourceSaveModel,
+} from '@/api/datasource/model/datasourceModel';
 import { defHttp } from '@/utils/http/axios';
 
 enum Api {
@@ -12,7 +17,7 @@ enum Api {
 
 // 获取数据源列表
 export const getDatasourcePage = (params: DatasourceParams) =>
-  defHttp.get<DatasourceModel>({ url: Api.PAGE, params });
+  defHttp.get<DatasourcePageListModel>({ url: Api.PAGE, params });
 
 // 保存数据
 export const saveDatasource = (data: DatasourceSaveModel) =>

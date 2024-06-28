@@ -5,9 +5,6 @@
         <a-button type="primary" @click="handleCreate">新增接口</a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <!--        <template v-if="column.key === 'datasourceName'">-->
-        <!--          <a @click="handleDatasourceDetail(record)">{{ record.datasourceName }}</a>-->
-        <!--        </template>-->
         <template v-if="column.key === 'action'">
           <TableAction
             :actions="[
@@ -31,22 +28,22 @@
         </template>
       </template>
     </BasicTable>
+    <InterfaceModel @register="register" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
-
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { getInterfaceList } from '@/api/interface/interface';
   import { PageWrapper } from '@/components/Page';
 
   import { columns, searchFormSchema } from './interface.data';
-  import { useGo } from '@/hooks/web/usePage';
+  import InterfaceModel from '@/views/interface/component/InterfaceModel.vue';
+  import { useModal } from '@/components/Modal';
 
   defineOptions({ name: 'InterfaceManagement' });
   const searchInfo = reactive<Recordable>({});
-  const go = useGo();
-  const [registerTable] = useTable({
+  const [registerTable, { reload }] = useTable({
     title: '接口列表',
     api: getInterfaceList,
     rowKey: 'id',
@@ -76,17 +73,26 @@
       // slots: { customRender: 'action' },
     },
   });
+  const [register, { openModal }] = useModal();
 
   function handleCreate() {
-    go(`/interface/info?&type=HTTP`);
+    openModal(true, { type: undefined, id: undefined });
   }
 
   function handleEdit(record: Recordable) {
-    console.log(record);
-    go(`/interface/info?id=${record.id}&type=${record.type}`);
+    openModal(true, {
+      type: record.type,
+      id: record.id,
+      datasourceName: record.datasourceName,
+      datasourceId: record.datasourceId,
+    });
   }
 
   function handleDelete(record: Recordable) {
     console.log(record);
+  }
+
+  function handleSuccess() {
+    reload();
   }
 </script>
