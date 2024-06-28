@@ -34,7 +34,7 @@
       </template>
     </BasicTable>
     <DatasourceModel @register="registerModal" @success="handleSuccess" />
-    <InterfaceModel @register="registerInterfaceModal" @success="openInterfaceModal" />
+    <InterfaceModel @register="registerInterfaceModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>

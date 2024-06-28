@@ -12,6 +12,11 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: '数据类型',
+    dataIndex: 'type',
+    width: 120,
+  },
+  {
     title: '创建时间',
     dataIndex: 'createTime',
     width: 180,

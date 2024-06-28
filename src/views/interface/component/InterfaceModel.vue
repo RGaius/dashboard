@@ -45,8 +45,6 @@
 
   defineOptions({ name: 'InterfaceModal' });
 
-  const emit = defineEmits(['success', 'register']);
-
   const { createMessage } = useMessage();
   const { getDataSourceTypeList } = useDatasource();
 
@@ -104,7 +102,6 @@
     setModalProps({ confirmLoading: true });
     closeModal();
     setModalProps({ confirmLoading: false });
-    emit('success');
   }
 </script>
 
