@@ -9,9 +9,10 @@
               <div class="title">{{ type }}</div>
             </div>
           </Col>
-          <Col :span="4">
+          <Col :span="6">
             <div class="btn-group">
-              <a-button @click="handleValidate">测试连接</a-button>
+              <a-button @click="setReqParam">测试参数</a-button>
+              <a-button @click="handleValidate">测试接口</a-button>
               <a-button type="primary" @click="handleSubmit">提交</a-button>
             </div>
           </Col>
@@ -91,6 +92,7 @@
     Radio,
     Select,
   } from '@formily/antdv';
+  import { useModal } from '@/components/Modal';
 
   const { SchemaField } = createSchemaField({
     components: {
@@ -115,6 +117,7 @@
   const [openFullLoading, closeFullLoading] = useLoading({
     tip: '加载中...',
   });
+  const [register, { openModal }] = useModal();
   const { getInterfaceSchema } = useDatasource();
   const emits = defineEmits(['submitAfter']);
   // 从父组件中获取id和type
@@ -199,7 +202,11 @@
 
   // 展示数据源验证结果
   function openResult(result) {
-    openResultDrawer(true, result);
+    openResultDrawer(true, { value: result, placement: 'bottom', title: '控制台' });
+  }
+
+  function setReqParam() {
+    openResultDrawer(true, { value: {}, placement: 'bottom', title: '测试参数' });
   }
 </script>
 <style lang="less" scoped>

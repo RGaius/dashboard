@@ -35,15 +35,13 @@
   const prefixCls = 'list-card';
   //分页相关
   const current = ref(1);
-  const size = ref(36);
+  const size = ref(12);
   const total = ref(0);
   const paginationProp = ref({
-    showSizeChanger: false,
-    showQuickJumper: true,
     pageSize: size,
     current,
     total,
-    showTotal: (total: number) => `总 ${total} 条`,
+    showTotal: (total: number) => `共 ${total} 条数据`,
     onChange: pageChange,
     onShowSizeChange: pageSizeChange,
   });
@@ -108,6 +106,14 @@
         font-size: 16px;
         color: rgb(29, 33, 41);
         margin-left: 8px;
+        // 操作长度省略，鼠标移入时显示
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+          overflow: visible;
+        }
       }
     }
   }
