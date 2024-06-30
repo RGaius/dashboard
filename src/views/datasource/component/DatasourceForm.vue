@@ -37,7 +37,7 @@
         </ObjectField>
       </FormLayout>
     </FormProvider>
-    <ValidateResult @register="result" />
+    <Console @register="result" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -56,7 +56,7 @@
   } from '@/api/datasource/datasource';
   import { useLoading } from '@/components/Loading';
   import { useDrawer } from '@/components/Drawer';
-  import ValidateResult from './ValidateResult.vue';
+  import Console from '@/components/Console/index.vue';
   import { Col, Divider, Row } from 'ant-design-vue';
   import {
     ArrayTable,
@@ -177,7 +177,12 @@
 
   // 展示数据源验证结果
   function openResult(result) {
-    openResultDrawer(true, result);
+    openResultDrawer(true, {
+      value: result.message,
+      placement: 'bottom',
+      title: '控制台',
+      mode: 'textile',
+    });
   }
 </script>
 <style lang="less" scoped>

@@ -56,7 +56,7 @@
         </ObjectField>
       </FormLayout>
     </FormProvider>
-    <ValidateResult @register="result" />
+    <Console @register="result" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -76,7 +76,7 @@
   import { useDatasource } from '@/hooks/datasource/useDatasource';
   import { useLoading } from '@/components/Loading';
   import Icon from '@/components/Icon/Icon.vue';
-  import ValidateResult from './ValidateResult.vue';
+  import Console from '@/components/Console/index.vue';
   import { useDrawer } from '@/components/Drawer';
 
   import {
@@ -202,7 +202,14 @@
 
   // 展示数据源验证结果
   function openResult(result) {
-    openResultDrawer(true, { value: result, placement: 'bottom', title: '控制台' });
+    const { success, data } = result;
+    let props = { value: data, placement: 'bottom', title: '控制台' };
+    if (success) {
+      props.mode = 'application/json';
+    } else {
+      props.mode = 'textile';
+    }
+    openResultDrawer(true, props);
   }
 
   function setReqParam() {

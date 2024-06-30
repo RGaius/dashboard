@@ -11,7 +11,7 @@ export const Datasource = {
     port: {
       type: 'number',
       title: '端口',
-      default: 5432,
+      default: 3306,
       required: true,
       minimum: 1,
       maximum: 65535,
@@ -32,14 +32,6 @@ export const Datasource = {
       'x-decorator': 'FormItem',
       'x-component': 'Password',
     },
-    schema: {
-      type: 'string',
-      title: 'Schema',
-      default: 'public',
-      required: true,
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-    },
     database: {
       type: 'string',
       title: '数据库',
@@ -51,7 +43,7 @@ export const Datasource = {
       type: 'string',
       title: '驱动类',
       required: true,
-      default: 'org.postgresql.Driver',
+      default: 'org.mariadb.jdbc.Driver',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-hidden': true,
@@ -60,7 +52,8 @@ export const Datasource = {
       type: 'string',
       title: 'URL格式',
       required: true,
-      default: 'jdbc:postgresql://${host}:${port}/${database}?currentSchema=${schema}',
+      default:
+        'jdbc:mariadb://${host}:${port}/${database}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-hidden': true,
@@ -138,46 +131,50 @@ export const Datasource = {
                 },
                 maxLifetime: {
                   type: 'number',
-                  title: '连接最大存活时间（毫秒）',
+                  title: '连接最大存活时间',
                   required: true,
                   default: 1800000,
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
                   'x-decorator-props': {
                     labelCol: '3',
+                    addonAfter: '毫秒',
                   },
                 },
                 connectionTimeout: {
                   type: 'number',
-                  title: '连接超时时间（毫秒）',
+                  title: '连接超时时间',
                   required: true,
                   default: 30000,
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
                   'x-decorator-props': {
                     labelCol: '3',
+                    addonAfter: '毫秒',
                   },
                 },
                 idleTimeout: {
                   type: 'number',
-                  title: '连接空闲时间（毫秒）',
+                  title: '连接空闲时间',
                   required: true,
                   default: 600000,
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
                   'x-decorator-props': {
                     labelCol: '3',
+                    addonAfter: '毫秒',
                   },
                 },
                 keepAliveTime: {
                   type: 'number',
-                  title: '连接保活时间（毫秒）',
+                  title: '连接保活时间',
                   required: true,
                   default: 300000,
                   'x-decorator': 'FormItem',
                   'x-component': 'InputNumber',
                   'x-decorator-props': {
                     labelCol: '3',
+                    addonAfter: '毫秒',
                   },
                 },
               },
@@ -189,10 +186,21 @@ export const Datasource = {
   },
 };
 
-// postgresql 连接口配置
+// 接口配置
 export const Interface = {
   type: 'object',
   properties: {
+    timeout: {
+      type: 'number',
+      title: '超时时间',
+      required: true,
+      default: 60,
+      'x-decorator': 'FormItem',
+      'x-decorator-props': {
+        addonAfter: '秒',
+      },
+      'x-component': 'InputNumber',
+    },
     sql: {
       type: 'string',
       title: 'SQL语句',

@@ -10,26 +10,22 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { ref } from 'vue';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { CodeEditor } from '@/components/CodeEditor';
+  import { MODE } from '@/components/CodeEditor/src/typing';
 
   const result = ref(null);
   const placement = ref('bottom');
   const title = ref('控制台');
+  const mode = ref('');
 
   const [register] = useDrawerInner((data) => {
     result.value = data.value;
     placement.value = data.placement;
     title.value = data.title;
+    mode.value = data?.mode ? data.mode : MODE.TEXTILE;
   });
 </script>
-<style lang="less" scoped>
-  .CodeMirror {
-    height: 500px;
-  }
-
-  .codemirror-container {
-    height: 400px; /* 你可以根据需要调整这个值 */
-  }
+<style lang="less">
 </style>

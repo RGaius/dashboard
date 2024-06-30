@@ -20,6 +20,10 @@ export const typeList: any[] = [
     icon: 'postgresql|svg',
   },
   {
+    type: 'OceanBase',
+    icon: 'oceanbase|svg',
+  },
+  {
     type: 'MSSQL',
     icon: 'mssql|svg',
   },
@@ -40,7 +44,7 @@ export const typeList: any[] = [
     icon: 'tidb|svg',
   },
   {
-    type: 'Clickhouse',
+    type: 'ClickHouse',
     icon: 'clickhouse|svg',
   },
   {

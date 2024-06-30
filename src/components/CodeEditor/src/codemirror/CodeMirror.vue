@@ -95,8 +95,7 @@
 
   function setTheme() {
     unref(editor)?.setOption(
-      'theme',
-      appStore.getDarkMode === 'light' ? 'idea' : 'material-palenight',
+      'theme', 'material-palenight',
     );
   }
 
