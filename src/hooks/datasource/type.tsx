@@ -68,23 +68,7 @@ export const typeList: any[] = [
     icon: 'kafka|svg',
   },
   {
-    type: 'RocketMQ',
-    icon: 'rocketmq|svg',
-  },
-  {
-    type: 'gRpc',
-    icon: 'grpc|svg',
-  },
-  {
     type: 'Dubbo',
     icon: 'dubbo|svg',
-  },
-  {
-    type: 'Prometheus',
-    icon: 'prometheus|svg',
-  },
-  {
-    type: 'Zabbix',
-    icon: 'zabbix|svg',
   },
 ];

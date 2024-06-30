@@ -73,6 +73,17 @@ export const Datasource = {
                     },
                   ],
                 },
+                bufferMemory: {
+                  type: 'number',
+                  title: '缓冲区大小',
+                  default: 33554432,
+                  required: true,
+                  'x-decorator': 'FormItem',
+                  'x-component': 'InputNumber',
+                  'x-component-props': {
+                    placeholder: '请输入缓冲区大小',
+                  },
+                },
                 retries: {
                   type: 'number',
                   title: '重试次数',
@@ -247,15 +258,13 @@ export const Datasource = {
 export const Interface = {
   type: 'object',
   properties: {
-    comsumerGroup: {
+    key: {
       type: 'string',
-      title: '消费者组',
-      default: 'cotopus-comsumer-group',
-      required: true,
+      title: 'Key',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-component-props': {
-        placeholder: '请输入消费者组',
+        placeholder: '请输入Key',
       },
     },
     topic: {
@@ -277,92 +286,18 @@ export const Interface = {
         placeholder: '请输入分区',
       },
     },
-    // 消费初始偏移量、默认值：latest
-    offset: {
+    value: {
       type: 'string',
-      title: '初始偏移量',
-      default: 'latest',
+      title: 'Value',
       required: true,
       'x-decorator': 'FormItem',
-      'x-component': 'Select',
+      'x-component': 'Input.TextArea',
       'x-component-props': {
-        placeholder: '请选择初始偏移量',
-      },
-      enum: [
-        {
-          label: '从最新偏移量开始消费',
-          value: 'latest',
+        placeholder: '请输入Value',
+        autoSize: {
+          minRows: 3,
+          maxRows: 6,
         },
-        {
-          label: '从头开始消费',
-          value: 'earliest',
-        },
-        {
-          label: '从指定偏移量开始消费',
-          value: 'offset',
-        },
-      ],
-    },
-    offsetValue: {
-      type: 'number',
-      title: '偏移量值',
-      required: true,
-      'x-decorator': 'FormItem',
-      'x-component': 'InputNumber',
-      'x-component-props': {
-        placeholder: '请输入偏移量值',
-      },
-      'x-reactions': [
-        {
-          dependencies: ['.offset'],
-          fulfill: {
-            state: {
-              visible: '{{$deps[0] === "offset"}}',
-            },
-          },
-        },
-      ],
-    },
-    timeout: {
-      type: 'number',
-      title: '超时时间',
-      default: 3000,
-      required: true,
-      'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        addonAfter: '毫秒',
-      },
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: '请输入超时时间',
-      },
-    },
-    maxBytes: {
-      type: 'number',
-      title: '最大字节数',
-      default: 1048576,
-      required: true,
-      'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        addonAfter: '字节',
-      },
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: '请输入最大字节数',
-      },
-    },
-    maxWaitTime: {
-      type: 'number',
-      title: '最大等待时间',
-      default: 100,
-      required: true,
-      'x-decorator': 'FormItem',
-      'x-decorator-props': {
-        addonAfter: '毫秒',
-      },
-      'x-component': 'Input',
-      'x-component-props': {
-        placeholder: '请输入最大等待时间',
       },
     },
   },

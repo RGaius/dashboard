@@ -16,18 +16,8 @@ const dashboard: AppRouteModule = {
   children: [
     {
       path: 'index',
-      name: 'Interface',
+      name: 'InterfaceIndex',
       component: () => import('@/views/interface/index.vue'),
-      meta: {
-        // affix: true,
-        hideMenu: true,
-        title: t('routes.interface.interface'),
-      },
-    },
-    {
-      path: 'info',
-      name: 'InterfaceInfo',
-      component: () => import('@/views/interface/component/InterfaceInfo.vue'),
       meta: {
         // affix: true,
         hideMenu: true,

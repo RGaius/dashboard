@@ -9,14 +9,14 @@ const dashboard: AppRouteModule = {
   redirect: '/datasource/index',
   meta: {
     orderNo: 11,
-    icon: 'mdi:database',
+    icon: 'mdi:database-outline',
     hideChildrenInMenu: true,
     title: t('routes.datasource.datasource'),
   },
   children: [
     {
       path: 'index',
-      name: 'Datasource',
+      name: 'DatasourceIndex',
       component: () => import('@/views/datasource/index.vue'),
       meta: {
         // affix: true,

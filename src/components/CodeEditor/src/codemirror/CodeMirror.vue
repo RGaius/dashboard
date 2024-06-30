@@ -116,7 +116,7 @@
       mode: props.mode,
       readOnly: props.readonly,
       tabSize: 2,
-      theme: 'material-palenight',
+      theme: 'material-ocean',
       lineWrapping: true,
       lineNumbers: true,
       ...addonOptions,

@@ -70,6 +70,9 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
+    "@antv/x6": "^2.18.1",
+    "@antv/x6-plugin-selection": "^2.2.2",
+    "@antv/x6-vue-shape": "^2.1.2",
     "@formily/antdv": "2.0.1-beta.3",
     "@formily/core": "^2.3.1",
     "@formily/vue": "^2.3.1",
