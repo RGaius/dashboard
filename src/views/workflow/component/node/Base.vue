@@ -66,25 +66,25 @@
 
   // 鼠标进入矩形主区域的时候显示连接桩
   function onMainMouseEnter() {
-    // 获取该节点下的所有连接桩
-    const ports = unref(node).getPorts() || [];
-    ports.forEach((port) => {
-      unref(node).setPortProp(port.id, 'attrs/circle', {
-        fill: '#fff',
-        stroke: '#85A5FF',
-      });
-    });
+    // // 获取该节点下的所有连接桩
+    // const ports = unref(node).getPorts() || [];
+    // ports.forEach((port) => {
+    //   unref(node).setPortProp(port.id, 'attrs/circle', {
+    //     fill: '#fff',
+    //     stroke: '#85A5FF',
+    //   });
+    // });
   }
 
   function onMainMouseLeave() {
-    // 获取该节点下的所有连接桩
-    const ports = unref(node).getPorts() || [];
-    ports.forEach((port) => {
-      unref(node).setPortProp(port.id, 'attrs/circle', {
-        fill: '#fff',
-        stroke: '#fff',
-      });
-    });
+    // // 获取该节点下的所有连接桩
+    // const ports = unref(node).getPorts() || [];
+    // ports.forEach((port) => {
+    //   unref(node).setPortProp(port.id, 'attrs/circle', {
+    //     fill: '#fff',
+    //     stroke: '#fff',
+    //   });
+    // });
   }
 </script>
 
