@@ -1,6 +1,6 @@
 import { Graph, Path } from '@antv/x6';
 
-export const initConnector = () => {
+export const registerConnector = () => {
   Graph.registerConnector(
     'curveConnector',
     (sourcePoint, targetPoint) => {

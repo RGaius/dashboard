@@ -1,6 +1,6 @@
 import { Edge, Graph } from '@antv/x6';
 
-export const initEdge = () => {
+export const registerEdge = () => {
   Edge.config({
     markup: [
       {

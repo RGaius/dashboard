@@ -2,7 +2,7 @@ import { register } from '@antv/x6-vue-shape';
 
 import Base from '@/views/workflow/graph/node/Base.vue';
 
-export const initNode = () => {
+export const registerNode = () => {
   register({
     shape: 'custom-node',
     component: Base,
