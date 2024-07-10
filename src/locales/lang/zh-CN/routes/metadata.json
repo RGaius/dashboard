@@ -1,4 +1,6 @@
 {
+  "name": "源数据",
   "datasource": "数据源",
+  "interface": "接口",
   "type": "数据源类型"
 }
