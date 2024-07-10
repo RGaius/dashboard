@@ -1,47 +1,51 @@
-import { Edge, Graph } from '@antv/x6';
+import { Graph } from '@antv/x6';
 
 export const registerEdge = () => {
-  Edge.config({
-    markup: [
-      {
-        tagName: 'path',
-        selector: 'wrap',
+  Graph.registerEdge(
+    'custom-edge-label',
+    {
+      inherit: 'edge',
+      defaultLabel: {
+        markup: [
+          {
+            tagName: 'rect',
+            selector: 'body',
+          },
+          {
+            tagName: 'text',
+            selector: 'label',
+          },
+        ],
         attrs: {
-          fill: 'none',
-          cursor: 'pointer',
-          stroke: 'transparent',
-          strokeLinecap: 'round',
+          label: {
+            fill: '#000',
+            fontSize: 14,
+            textAnchor: 'middle',
+            textVerticalAnchor: 'middle',
+            pointerEvents: 'none',
+          },
+          body: {
+            ref: 'label',
+            fill: '#ffd591',
+            stroke: '#ffa940',
+            strokeWidth: 2,
+            rx: 4,
+            ry: 4,
+            refWidth: '140%',
+            refHeight: '140%',
+            refX: '-20%',
+            refY: '-20%',
+          },
         },
-      },
-      {
-        tagName: 'path',
-        selector: 'line',
-        attrs: {
-          fill: 'none',
-          pointerEvents: 'none',
-        },
-      },
-    ],
-    connector: { name: 'curveConnector' },
-    attrs: {
-      wrap: {
-        connection: true,
-        strokeWidth: 10,
-        strokeLinejoin: 'round',
-      },
-      line: {
-        connection: true,
-        stroke: '#52c41a',
-        strokeWidth: 1,
-        targetMarker: {
-          name: 'classic',
-          size: 6,
-        },
-        style: {
-          animation: '',
+        position: {
+          distance: 200,
+          options: {
+            absoluteDistance: true,
+            reverseDistance: true,
+          },
         },
       },
     },
-  });
-  Graph.registerEdge('data-processing-curve', Edge, true);
+    true,
+  );
 };

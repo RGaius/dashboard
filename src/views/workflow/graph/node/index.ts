@@ -4,7 +4,8 @@ import Base from '@/views/workflow/graph/node/Base.vue';
 
 export const registerNode = () => {
   register({
-    shape: 'custom-node',
+    shape: 'task_node',
+    inherit: 'rect',
     component: Base,
     width: 212,
     height: 48,

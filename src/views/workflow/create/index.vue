@@ -1,39 +1,27 @@
 <template>
   <div class="x6-container">
-    <div class="app-stencil" id="refStencil"></div>
+    <div class="app-stencil" :ref="refStencil"></div>
     <div style="width: calc(100% - 208px); height: 100%; position: relative">
-      <div class="app-content" id="refContainer"></div>
+      <div class="app-content" :ref="refContainer"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref } from 'vue';
-  import { type Graph } from '@antv/x6';
+  import { onMounted, ref } from 'vue';
   import { initGraph } from '@/views/workflow/graph';
+  import { registerNode } from '@/views/workflow/graph/node';
+  import { registerConnector } from '@/views/workflow/graph/connector';
+  import { registerEdge } from '@/views/workflow/graph/edge';
 
-  const graph = ref<Graph>();
-
-  const refStencil = document.getElementById('refStencil') as HTMLElement;
-  const refContainer = document.getElementById('refContainer') as HTMLElement;
+  const refStencil = ref();
+  const refContainer = ref();
 
   onMounted(() => {
-    initGraph({
-      x6Container: refContainer,
-      refStencil: refStencil,
-      graph: {
-        value: null,
-        onChange: (_graph: Graph) => {
-          graph.value = _graph;
-        },
-      },
-    });
-  });
-
-  onUnmounted(() => {
-    if (graph.value) {
-      graph.value.dispose();
-    }
+    const _graph = initGraph({ x6Container: refContainer, refStencil: refStencil });
+    registerNode();
+    registerConnector();
+    registerEdge();
   });
 </script>
 
