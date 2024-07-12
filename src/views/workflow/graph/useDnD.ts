@@ -1,4 +1,4 @@
-import { useVueFlow } from '@vue-flow/core';
+import { Position, useVueFlow } from '@vue-flow/core';
 import { ref, watch } from 'vue';
 import { buildRandomString } from '@/utils/uuid.js';
 
@@ -28,7 +28,6 @@ export default function useDragAndDrop() {
   });
 
   function onDragStart(event, data) {
-    console.log(data);
     const { name, icon, schema, type } = data;
 
     if (event.dataTransfer) {

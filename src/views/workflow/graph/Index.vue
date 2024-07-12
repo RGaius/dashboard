@@ -5,7 +5,8 @@
   import { Controls } from '@vue-flow/controls';
   import DropzoneBackground from './DropzoneBackground.vue';
   import Sidebar from './Sidebar.vue';
-  import Node from './node/Index.vue';
+  import CustomConnectionLine from './edge/CustomConnectionLine.vue';
+  import NodeForm from './node/NodeForm.vue';
   import useDragAndDrop from './useDnD.ts';
   import { useDrawer } from '@/components/Drawer';
 
@@ -15,9 +16,8 @@
 
   const { onDragOver, onDrop, onDragLeave, isDragOver } = useDragAndDrop();
 
-  const nodes = ref([]);
-
   onConnect(addEdges);
+  const nodes = ref([]);
 
   onNodeDoubleClick((event) => {
     console.log('Node drag started', event);
@@ -33,7 +33,14 @@
 <template>
   <div class="dnd-flow" @drop="onDrop">
     <Sidebar />
-    <VueFlow :nodes="nodes" @dragover="onDragOver" @dragleave="onDragLeave">
+    <VueFlow
+      :nodes="nodes"
+      @dragover="onDragOver"
+      @dragleave="onDragLeave"
+      :connection-radius="30"
+      auto-connect
+      fit-view-on-init
+    >
       <MiniMap pannable zoomable />
       <Controls position="top-right" />
       <DropzoneBackground
@@ -42,8 +49,20 @@
           transition: 'background-color 0.2s ease',
         }"
       />
+      <template
+        #connection-line="{ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition }"
+      >
+        <CustomConnectionLine
+          :source-x="sourceX"
+          :source-y="sourceY"
+          :target-x="targetX"
+          :target-y="targetY"
+          :source-position="sourcePosition"
+          :target-position="targetPosition"
+        />
+      </template>
     </VueFlow>
-    <Node @register="result" />
+    <NodeForm @register="result" />
   </div>
 </template>
 <style>
