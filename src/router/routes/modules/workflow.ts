@@ -27,12 +27,12 @@ const dashboard: AppRouteModule = {
     {
       path: 'create',
       name: 'WorkflowInfo',
-      component: () => import('@/views/workflow/component/Workflow.vue'),
+      component: () => import('@/views/workflow/graph/Index.vue'),
       meta: {
         title: t('routes.workflow.name'),
         hideMenu: true,
       },
-    }
+    },
   ],
 };
 

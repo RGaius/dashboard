@@ -1,19 +1,18 @@
 {
-  "name": "vben-admin",
+  "name": "octopus-dashboard",
   "version": "2.11.5",
-  "homepage": "https://github.com/vbenjs/vue-vben-admin",
+  "homepage": "https://github.com/rgauis/dashboard",
   "bugs": {
-    "url": "https://github.com/vbenjs/vue-vben-admin/issues"
+    "url": "https://github.com/rgauis/dashboard/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vbenjs/vue-vben-admin.git"
+    "url": "git+https://github.com/rgauis/dashboard.git"
   },
   "license": "MIT",
   "author": {
-    "name": "vben",
-    "email": "anncwb@126.com",
-    "url": "https://github.com/anncwb"
+    "name": "gaius",
+    "url": "https://github.com/rgaius"
   },
   "type": "module",
   "scripts": {
@@ -70,19 +69,15 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
-    "@antv/x6": "^2.18.1",
-    "@antv/x6-plugin-dnd": "^2.1.1",
-    "@antv/x6-plugin-history": "^2.2.4",
-    "@antv/x6-plugin-selection": "^2.2.2",
-    "@antv/x6-plugin-snapline": "^2.1.7",
-    "@antv/x6-plugin-stencil": "^2.1.5",
-    "@antv/x6-plugin-transform": "^2.1.8",
-    "@antv/x6-vue-shape": "^2.1.2",
     "@formily/antdv": "2.0.1-beta.3",
     "@formily/core": "^2.3.1",
     "@formily/vue": "^2.3.1",
     "@iconify/iconify": "^3.1.1",
     "@vben/hooks": "workspace:*",
+    "@vue-flow/background": "^1.3.0",
+    "@vue-flow/controls": "^1.1.2",
+    "@vue-flow/core": "^1.38.5",
+    "@vue-flow/minimap": "^1.5.0",
     "@vue/shared": "^3.4.25",
     "@vueuse/core": "^10.9.0",
     "@zxcvbn-ts/core": "^3.0.4",

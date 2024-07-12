@@ -52,8 +52,7 @@ export const Datasource = {
       type: 'string',
       title: 'URL格式',
       required: true,
-      default:
-        'jdbc:dm://${host}:${port}?schema=${database}',
+      default: 'jdbc:dm://${host}:${port}?schema=${database}',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       'x-hidden': true,

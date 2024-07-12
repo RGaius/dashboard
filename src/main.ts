@@ -1,6 +1,12 @@
 import 'uno.css';
 import '@/design/index.less';
 import 'ant-design-vue/dist/reset.css';
+/* these are necessary styles for vue flow */
+import '@vue-flow/core/dist/style.css';
+import '@vue-flow/controls/dist/style.css';
+import '@vue-flow/minimap/dist/style.css';
+/* this contains the default theme, these are optional styles */
+import '@vue-flow/core/dist/theme-default.css';
 // Register icon sprite
 import 'virtual:svg-icons-register';
 

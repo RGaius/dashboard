@@ -20,9 +20,18 @@ export function buildUUID(): string {
 }
 
 let unique = 0;
+
 export function buildShortUUID(prefix = ''): string {
   const time = Date.now();
   const random = Math.floor(Math.random() * 1000000000);
   unique++;
   return prefix + '_' + random + unique + String(time);
+}
+
+/**
+ * 生成四位随机字符串 包含小写字母和数字
+ */
+export function buildRandomString(): string {
+  const random = Math.floor(Math.random() * 1000000000);
+  return random.toString(36);
 }
