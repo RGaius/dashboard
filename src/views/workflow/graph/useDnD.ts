@@ -1,6 +1,6 @@
-import { Position, useVueFlow } from '@vue-flow/core';
-import { ref, watch } from 'vue';
-import { buildRandomString } from '@/utils/uuid.js';
+import { useVueFlow } from "@vue-flow/core";
+import { ref, watch } from "vue";
+import { buildRandomString } from "@/utils/uuid.js";
 
 /**
  * In a real world scenario you'd want to avoid creating refs in a global scope like this as they might not be cleaned up properly.
@@ -84,13 +84,17 @@ export default function useDragAndDrop() {
     });
 
     const nodeId = buildRandomString();
-    const label = `${nodeName.value}- ${nodeId}`;
+    const label = `${nodeName.value}-${nodeId}`;
+    const formValue = {
+      nodeId: nodeId,
+      name: label,
+    };
 
     const newNode = {
       id: nodeId,
       type: draggedType.value,
       position,
-      data: { label: label, schema: nodeSchema.value, icon: nodeIcon.value },
+      data: { label: label, schema: nodeSchema.value, icon: nodeIcon.value, value: formValue },
     };
 
     /**

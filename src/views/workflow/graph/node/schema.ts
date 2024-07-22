@@ -6,6 +6,13 @@ export const schema = [
     schema: {
       type: 'object',
       properties: {
+        nodeId: {
+          type: 'string',
+          title: '节点编号',
+          readOnly: true,
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+        },
         name: {
           type: 'string',
           title: '节点名称',
@@ -30,6 +37,14 @@ export const schema = [
     schema: {
       type: 'object',
       properties: {
+        nodeId: {
+          type: 'string',
+          title: '节点编号',
+          required: true,
+          readOnly: true,
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+        },
         name: {
           type: 'string',
           title: '节点名称',

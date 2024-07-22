@@ -22,11 +22,7 @@
   onNodeDoubleClick((event) => {
     console.log('Node drag started', event);
     const { node } = event;
-    const { data } = node;
-    openResultDrawer(true, {
-      title: data.name,
-      schema: data.schema,
-    });
+    openResultDrawer(true, node);
   });
 </script>
 
@@ -39,7 +35,6 @@
       @dragleave="onDragLeave"
       :connection-radius="30"
       auto-connect
-      fit-view-on-init
     >
       <MiniMap pannable zoomable />
       <Controls position="top-right" />
@@ -83,7 +78,7 @@
     }
 
     .dnd-flow aside {
-      min-width: 10%;
+      min-width: 12%;
     }
   }
 
